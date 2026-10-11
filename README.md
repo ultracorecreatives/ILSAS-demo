@@ -15,6 +15,7 @@ It is a prototype for showing to stakeholders and collecting feedback. **Nothing
 | File / folder | What it is | Do you need to open it? |
 |---|---|---|
 | **`ILSAS Bangla Portal.dc.html`** | **The prototype itself.** | **Yes. This is the file to open.** |
+| `index.html` | Start page for web hosting (GitHub Pages). It opens the prototype automatically | No |
 | `README.md` | This guide | You are reading it |
 | **`manual/ILSAS ব্যবহার নির্দেশিকা.pdf`** | Bangla user manual with 17 screenshots, for end users | Yes, share this with users |
 | `manual/ILSAS ব্যবহার নির্দেশিকা.md`, `manual/screenshots/` | Editable source of the manual and its images | Only if the manual needs changes |
@@ -230,6 +231,8 @@ Screenshot:  (optional but helpful)
 ---
 
 ## 8. Change log
+
+**12 Oct 2026 (update 4)**: Added a red "ডেমো প্রোটোটাইপ — এটি প্রকৃত সরকারি সাইট নয়" banner on every page, a do-not-index tag, and `index.html` for GitHub Pages hosting.
 
 **12 Oct 2026 (update 3)**: Each role now has its own demo user (name, initials, ID), and the audit trail shows who did each action. Fixes: going to the portal home no longer looks logged out; records outside a user's jurisdiction are blocked; dashboard figures are scaled to the district or upazila; cards and rules the role can't open are dimmed and marked "প্রবেশাধিকার নেই"; search and the bell are hidden for roles that can't use them; logged-out visitors see national figures. Manual: added a demo users table and removed the help/feedback section.
 
