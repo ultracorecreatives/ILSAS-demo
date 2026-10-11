@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-688fec41-4afe-4ff5-8a7b-2e91c7e1c923/styles.css">
+<script src="_ds/modernist-688fec41-4afe-4ff5-8a7b-2e91c7e1c923/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@500;600;700&display=swap">
+<style>
+  :root {
+    --gov-green: #006a4e;
+    --gov-green-dark: #00432f;
+    --gov-green-100: #e6f0ec;
+    --gov-green-200: #c2dbd2;
+    --gov-red: #d21e2b;
+    --gov-red-100: #fbe7e8;
+    --gov-amber: #9a6a04;
+    --gov-amber-100: #fbf0d8;
+    --gov-line: #d3d8d5;
+    --color-bg: #ffffff;
+    --color-text: #1b2320;
+    --color-accent: #006a4e;
+    --color-accent-600: #00563f;
+    --color-accent-700: #00432f;
+    --color-divider: #d3d8d5;
+    --font-heading: "Noto Serif Bengali", "Hind Siliguri", serif;
+    --font-body: "Hind Siliguri", system-ui, sans-serif;
+  }
+  html, body { background: #eef1ef; }
+  .gov-link { color: inherit; text-decoration: none; }
+  .gov-link:hover { text-decoration: underline; }
+  .gov-tile { transition: background .12s linear, border-color .12s linear; cursor: pointer; }
+  .gov-tile:hover { background: var(--gov-green-100); border-color: var(--gov-green); }
+  .gov-row:hover { background: #f4f7f5; }
+  .gov-navlink { padding: 11px 15px; color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 500; display: inline-block; }
+  .gov-navlink:hover { background: var(--gov-green-dark); }
+  .gov-navlink[aria-current="page"] { background: var(--gov-green-dark); }
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;font-family:var(--font-body);color:var(--color-text);background:#eef1ef;font-size:15px">
+
+  <div style="background:var(--gov-green-dark);color:#ffffff;font-size:12.5px">
+    <div style="max-width:1220px;margin:0 auto;padding:6px 18px;display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+      <a class="gov-link" href="#" onClick="{{ noop }}">বাংলাদেশ জাতীয় তথ্য বাতায়ন</a>
+      <span style="opacity:.4">|</span>
+      <a class="gov-link" href="#" onClick="{{ noop }}">সিটিজেন চার্টার</a>
+      <span style="margin-left:auto;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <span>সরকারি তথ্য ও সেবা <strong>৩৩৩</strong></span>
+        <span>জরুরি সেবা <strong>৯৯৯</strong></span>
+        <span style="opacity:.4">|</span>
+        <a class="gov-link" href="#" onClick="{{ langNote }}">English</a>
+      </span>
+    </div>
+  </div>
+
+  <div style="background:#ffffff;border-bottom:1px solid var(--gov-line)">
+    <div style="max-width:1220px;margin:0 auto;padding:14px 18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <div style="width:54px;height:54px;border:2px solid var(--gov-green);display:grid;place-items:center;flex:none">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--gov-green)" stroke-width="1.6"><path d="M12 2 3 7v3h18V7z"></path><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 21h18"></path></svg>
+      </div>
+      <div style="margin-right:auto">
+        <div style="font-size:13px;letter-spacing:.02em">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</div>
+        <div style="font-family:var(--font-heading);font-weight:700;font-size:26px;line-height:1.25;color:var(--gov-green-dark)">ভূমি মন্ত্রণালয়</div>
+        <div style="font-size:13.5px;color:#4a544f">আন্তঃসংযুক্ত ভূমি সেবা নিরীক্ষা ব্যবস্থা (ILSAS)</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <sc-if value="{{ showSearch }}" hint-placeholder-val="{{ true }}">
+        <div style="position:relative">
+          <input class="input" style="width:min(280px,60vw);border-radius:0;border-color:var(--gov-line);padding-left:32px;font-family:var(--font-body)" value="{{ search }}" onChange="{{ onSearch }}" onKeyDown="{{ onSearchKey }}" placeholder="খতিয়ান, দাগ, এনআইডি বা মামলা নম্বর">
+          <svg style="position:absolute;left:9px;top:10px" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b756f" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg>
+        </div>
+        </sc-if>
+        <sc-if value="{{ isPublic }}" hint-placeholder-val="{{ true }}">
+          <button class="btn" style="background:var(--gov-green);color:#ffffff;border:1px solid var(--gov-green);border-radius:0;font-family:var(--font-body);font-weight:600;height:38px" onClick="{{ goLogin }}">নিরীক্ষক লগইন</button>
+        </sc-if>
+        <sc-if value="{{ loggedIn }}">
+          <sc-if value="{{ showBell }}">
+          <div style="position:relative">
+            <button class="btn" aria-label="নোটিফিকেশন" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;height:40px;padding:0 10px;display:flex;align-items:center;gap:6px;font-family:var(--font-body)" onClick="{{ toggleBell }}">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--gov-green-dark)" stroke-width="1.7"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+              <span style="background:var(--gov-red);color:#fff;font-size:11.5px;min-width:19px;padding:0 5px;line-height:19px;text-align:center">{{ bellCount }}</span>
+            </button>
+            <sc-if value="{{ bellOpen }}">
+              <div style="position:absolute;right:0;top:46px;z-index:50;width:min(360px,88vw);background:#fff;border:1px solid var(--gov-line);border-top:3px solid var(--gov-green);box-shadow:0 8px 24px rgba(0,0,0,.12)">
+                <div style="padding:10px 14px;border-bottom:1px solid var(--gov-line);font-family:var(--font-heading);font-weight:600;color:var(--gov-green-dark)">নোটিফিকেশন ও রিমাইন্ডার</div>
+                <sc-for list="{{ bellItems }}" as="b" hint-placeholder-count="4">
+                  <div class="gov-row" onClick="{{ b.onClick }}" style="padding:9px 14px;border-bottom:1px solid #edf0ee;cursor:pointer;display:flex;gap:9px;align-items:flex-start">
+                    <span class="tag" style="border-radius:0;background:{{ b.bg }};color:{{ b.fg }};font-family:var(--font-body);font-size:11.5px;white-space:nowrap">{{ b.kind }}</span>
+                    <span style="font-size:13px;line-height:1.55">{{ b.text }}</span>
+                  </div>
+                </sc-for>
+                <div style="padding:8px 14px;font-size:12px;color:#6b756f">প্রকৃত সিস্টেমে এগুলো ই-মেইল ও SMS-এও যাবে।</div>
+              </div>
+            </sc-if>
+          </div>
+          </sc-if>
+          <div style="display:flex;align-items:center;gap:9px;border:1px solid var(--gov-line);padding:5px 10px">
+            <div style="min-width:28px;height:28px;padding:0 3px;background:var(--gov-green);color:#fff;display:grid;place-items:center;font-weight:600;font-size:12px">{{ userInitials }}</div>
+            <div style="line-height:1.2">
+              <div style="font-size:13px;font-weight:600">{{ userName }}</div>
+              <div style="font-size:11.5px;color:var(--gov-green-dark)">{{ roleLabel }}</div>
+            </div>
+            <button class="btn" style="border:0;padding:2px 4px;border-radius:0;font-family:var(--font-body);font-size:12px;color:var(--gov-red)" onClick="{{ logout }}">প্রস্থান</button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--gov-green)">
+    <div style="max-width:1220px;margin:0 auto;padding:0 8px;display:flex;flex-wrap:wrap">
+      <sc-for list="{{ navLinks }}" as="n" hint-placeholder-count="6">
+        <a class="gov-navlink" href="#" aria-current="{{ n.current }}" onClick="{{ n.onClick }}">{{ n.label }}</a>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex:1;max-width:1220px;width:100%;margin:0 auto;padding:18px">
+
+    <sc-if value="{{ isHome }}">
+      <div style="display:flex;flex-direction:column;gap:18px">
+
+        <div style="background:#ffffff;border:1px solid var(--gov-line);display:flex;align-items:stretch;flex-wrap:wrap">
+          <div style="background:var(--gov-red);color:#fff;padding:9px 14px;font-weight:600;font-size:13.5px;display:flex;align-items:center;white-space:nowrap">সর্বশেষ নোটিশ</div>
+          <div style="padding:9px 14px;font-size:14px;flex:1;min-width:240px">{{ tickerText }}</div>
+          <div style="padding:9px 14px;font-size:13px;color:#6b756f;border-left:1px solid var(--gov-line)">{{ tickerDate }}</div>
+        </div>
+
+        <div style="background:#ffffff;border:1px solid var(--gov-line);padding:26px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;align-items:center">
+          <div>
+            <div style="font-size:12.5px;letter-spacing:.14em;color:var(--gov-green-dark);font-weight:600;margin-bottom:8px">নিরীক্ষা তথ্য বাতায়ন</div>
+            <h2 style="font-family:var(--font-heading);font-size:clamp(26px,3.4vw,36px);line-height:1.3;margin:0 0 10px;color:var(--gov-green-dark)">ভূমি সেবার আন্তঃসংযুক্ত নিরীক্ষা ও যাচাই</h2>
+            <p style="margin:0 0 16px;font-size:15px;line-height:1.75;color:#3c4642;max-width:52ch">এলডি ট্যাক্স, ই-নামজারি, এলএআরএমএস, ই-পর্চা, খাস ও ইজারা এবং ভূমি তথ্য ব্যাংক — ছয়টি সিস্টেমের রেকর্ড এক জায়গায় মিলিয়ে দেখা, অসংগতি চিহ্নিত করা এবং আপত্তি নিষ্পত্তির কেন্দ্রীয় প্ল্যাটফর্ম।</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button class="btn" style="background:var(--gov-green);color:#fff;border:1px solid var(--gov-green);border-radius:0;font-family:var(--font-body);font-weight:600;height:40px;padding:0 18px" onClick="{{ goLogin }}">নিরীক্ষা কার্যক্রমে প্রবেশ</button>
+              <button class="btn" style="border:1px solid var(--gov-green);color:var(--gov-green-dark);border-radius:0;font-family:var(--font-body);font-weight:600;height:40px;padding:0 18px;background:#fff" onClick="{{ goSearchDemo }}">খতিয়ান/দাগ অনুসন্ধান</button>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--gov-line);border:1px solid var(--gov-line)">
+            <sc-for list="{{ homeStats }}" as="h" hint-placeholder-count="4">
+              <div style="background:#fff;padding:16px 14px">
+                <div style="font-family:var(--font-heading);font-size:30px;line-height:1.2;color:var(--gov-green-dark)">{{ h.value }}</div>
+                <div style="font-size:13px;color:#5a645f">{{ h.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <h4 style="font-family:var(--font-heading);margin:0;font-size:20px;color:var(--gov-green-dark)">সংযুক্ত ভূমি সেবাসমূহ</h4>
+            <div style="height:2px;background:var(--gov-line);flex:1"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px">
+            <sc-for list="{{ services }}" as="s" hint-placeholder-count="9">
+              <div class="gov-tile" onClick="{{ s.onClick }}" style="background:#fff;border:1px solid var(--gov-line);padding:16px;display:flex;gap:12px;align-items:flex-start">
+                <div style="width:38px;height:38px;border:1px solid var(--gov-green-200);background:var(--gov-green-100);display:grid;place-items:center;flex:none;color:var(--gov-green-dark);font-weight:600;font-size:13px">{{ s.no }}</div>
+                <div style="min-width:0">
+                  <div style="font-weight:600;font-size:15.5px;line-height:1.4">{{ s.bn }}</div>
+                  <div style="font-size:12.5px;color:#6b756f;margin-bottom:6px">{{ s.en }}</div>
+                  <span class="tag" style="border-radius:0;background:{{ s.bg }};color:{{ s.fg }};font-family:var(--font-body);font-size:12px">{{ s.flagLabel }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px">
+          <div style="background:#fff;border:1px solid var(--gov-line)">
+            <div style="padding:11px 16px;border-bottom:2px solid var(--gov-green);font-family:var(--font-heading);font-weight:600;font-size:17px;color:var(--gov-green-dark)">নোটিশ বোর্ড</div>
+            <div style="padding:4px 16px 14px">
+              <sc-for list="{{ notices }}" as="n" hint-placeholder-count="5">
+                <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed var(--gov-line);align-items:baseline">
+                  <span style="font-size:12px;color:#fff;background:{{ n.tagBg }};padding:2px 7px;white-space:nowrap">{{ n.kind }}</span>
+                  <a class="gov-link" href="#" onClick="{{ noop }}" style="font-size:14.5px;line-height:1.55;flex:1">{{ n.text }}</a>
+                  <span style="font-size:12px;color:#7a847f;white-space:nowrap">{{ n.date }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background:#fff;border:1px solid var(--gov-line)">
+            <div style="padding:11px 16px;border-bottom:2px solid var(--gov-green);font-family:var(--font-heading);font-weight:600;font-size:17px;color:var(--gov-green-dark)">নিরীক্ষা কর্তৃপক্ষ ও অধিক্ষেত্র</div>
+            <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ authorities }}" as="a" hint-placeholder-count="4">
+                <div style="display:flex;gap:12px;align-items:flex-start;border:1px solid var(--gov-line);padding:11px 12px">
+                  <div style="width:34px;height:34px;background:var(--gov-green-100);border:1px solid var(--gov-green-200);flex:none;display:grid;place-items:center">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gov-green-dark)" stroke-width="1.6"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  </div>
+                  <div>
+                    <div style="font-weight:600;font-size:14.5px">{{ a.role }}</div>
+                    <div style="font-size:13px;color:#5a645f;line-height:1.6">{{ a.scope }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isLogin }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;align-items:start">
+        <div style="background:#fff;border:1px solid var(--gov-line);padding:26px 24px">
+          <h4 style="font-family:var(--font-heading);margin:0 0 6px;font-size:22px;color:var(--gov-green-dark)">নিরাপদ প্রবেশ</h4>
+          <p style="font-size:14px;color:#5a645f;margin:0 0 20px">অনুমোদিত নিরীক্ষা কর্মকর্তাগণের জন্য। প্রবেশের সকল কার্যক্রম অডিট ট্রেইলে সংরক্ষিত হয়।</p>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="field"><label style="font-family:var(--font-body);font-size:13px;color:#3c4642">ব্যবহারকারী আইডি / কর্মচারী আইডি</label>
+              <input class="input" style="border-radius:0;font-family:var(--font-body)" value="{{ userId }}" onChange="{{ onUserId }}"></div>
+            <div class="field"><label style="font-family:var(--font-body);font-size:13px;color:#3c4642">পাসওয়ার্ড</label>
+              <input class="input" type="password" style="border-radius:0;font-family:var(--font-body)" value="{{ password }}" onChange="{{ onPassword }}"></div>
+            <div class="field"><label style="font-family:var(--font-body);font-size:13px;color:#3c4642">পদবি / স্তর</label>
+              <select class="input" style="border-radius:0;font-family:var(--font-body)" value="{{ role }}" onChange="{{ onRole }}">
+                <option>কেন্দ্রীয় নিরীক্ষা কর্মকর্তা</option>
+                <option>জেলা নিরীক্ষা কর্মকর্তা</option>
+                <option>উপজেলা নিরীক্ষা পরিদর্শক</option>
+                <option>দপ্তর প্রতিনিধি (জবাবদাতা)</option>
+                <option>DAC কমিটি সদস্য</option>
+                <option>মন্ত্রণালয় প্রতিনিধি</option>
+                <option>কারিগরি প্রশাসক</option>
+              </select></div>
+            <button class="btn" style="background:var(--gov-green);color:#fff;border:1px solid var(--gov-green);border-radius:0;font-family:var(--font-body);font-weight:600;height:44px;width:100%;margin-top:4px" onClick="{{ startOtp }}">ওটিপি যাচাইয়ে যান</button>
+            <div style="display:flex;justify-content:space-between;font-size:13px;padding-top:4px">
+              <a class="gov-link" href="#" onClick="{{ noop }}" style="color:var(--gov-green-dark)">পাসওয়ার্ড ভুলে গেছেন?</a>
+              <a class="gov-link" href="#" onClick="{{ noop }}" style="color:var(--gov-green-dark)">কারিগরি সহায়তা</a>
+            </div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--gov-line);padding:24px">
+          <div style="font-family:var(--font-heading);font-weight:600;font-size:18px;color:var(--gov-green-dark);margin-bottom:12px">প্রবেশের পূর্বে জেনে নিন</div>
+          <sc-for list="{{ loginNotes }}" as="l" hint-placeholder-count="4">
+            <div style="display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--gov-line);font-size:14px;line-height:1.7">
+              <span style="color:var(--gov-green);font-weight:700">—</span><span>{{ l.text }}</span>
+            </div>
+          </sc-for>
+          <div style="margin-top:16px;background:var(--gov-red-100);border-left:4px solid var(--gov-red);padding:12px 14px;font-size:13.5px;line-height:1.7">
+            অননুমোদিত প্রবেশ বা তথ্য পরিবর্তনের চেষ্টা প্রচলিত আইন অনুযায়ী দণ্ডনীয় অপরাধ।
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isDash }}">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+          <div>
+            <h4 style="font-family:var(--font-heading);margin:0;font-size:23px;color:var(--gov-green-dark)">{{ dashTitle }}</h4>
+            <div style="font-size:13.5px;color:#5a645f">অর্থবছর ২০২৪–২৫ · {{ dashScope }} · সর্বশেষ হালনাগাদ ০৯:০৪, ২০ সেপ্টেম্বর ২০২৬</div>
+          </div>
+          <div style="display:flex;gap:9px;flex-wrap:wrap">
+            <button class="btn" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;font-family:var(--font-body);height:38px" onClick="{{ goReports }}">অডিট লগ</button>
+            <button class="btn" style="background:var(--gov-green);color:#fff;border:1px solid var(--gov-green);border-radius:0;font-family:var(--font-body);font-weight:600;height:38px" onClick="{{ goVerifyMut }}">ক্রস-ভেরিফিকেশন চালান</button>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+          <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="5">
+            <div style="background:#fff;padding:15px 16px;border:1px solid var(--gov-line);border-top:3px solid var(--gov-green)">
+              <div style="font-size:13px;color:#5a645f;margin-bottom:4px">{{ k.label }}</div>
+              <div style="font-family:var(--font-heading);font-size:30px;line-height:1.2;color:{{ k.color }}">{{ k.value }}</div>
+              <div style="font-size:12px;color:#7a847f">{{ k.note }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <h5 style="font-family:var(--font-heading);margin:0;font-size:18px;color:var(--gov-green-dark)">সেবাভিত্তিক নিরীক্ষা সারি</h5>
+            <div style="height:2px;background:var(--gov-line);flex:1"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px">
+            <sc-for list="{{ services }}" as="s" hint-placeholder-count="9">
+              <div class="gov-tile" onClick="{{ s.onClick }}" style="background:#fff;border:1px solid var(--gov-line);padding:14px;opacity:{{ s.op }}">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px">
+                  <span style="font-size:12.5px;color:var(--gov-green-dark);font-weight:600">{{ s.no }}</span>
+                  <span class="tag" style="border-radius:0;background:{{ s.bg }};color:{{ s.fg }};font-family:var(--font-body);font-size:12px">{{ s.flagLabel }}</span>
+                </div>
+                <div style="font-weight:600;font-size:15px;line-height:1.4">{{ s.bn }}</div>
+                <div style="font-size:12.5px;color:#6b756f">{{ s.en }}</div>
+                <div style="margin-top:9px;padding-top:8px;border-top:1px solid var(--gov-line);font-size:12.5px;color:#6b756f;display:flex;justify-content:space-between;flex-wrap:wrap;gap:2px 10px">
+                  <span style="white-space:nowrap">{{ s.audited }} নিরীক্ষিত</span><span style="color:var(--gov-green-dark);white-space:nowrap">{{ s.action }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px">
+          <div style="background:#fff;border:1px solid var(--gov-line)">
+            <div style="padding:11px 16px;border-bottom:2px solid var(--gov-green);font-family:var(--font-heading);font-weight:600;font-size:17px;color:var(--gov-green-dark)">চলমান ক্রস-ভেরিফিকেশন বিধি</div>
+            <div style="padding:6px 16px 14px">
+              <table class="table" style="font-family:var(--font-body)">
+                <thead><tr><th style="font-family:var(--font-body)">বিধি</th><th style="font-family:var(--font-body)">পরিধি</th><th style="text-align:right;font-family:var(--font-body)">চিহ্নিত</th></tr></thead>
+                <tbody>
+                  <sc-for list="{{ rules }}" as="r" hint-placeholder-count="3">
+                    <tr class="gov-row" onClick="{{ r.onClick }}" style="cursor:pointer;opacity:{{ r.op }}">
+                      <td style="font-weight:600">{{ r.name }}</td>
+                      <td style="font-size:13px;color:#6b756f">{{ r.scope }}</td>
+                      <td style="text-align:right;font-family:var(--font-heading);font-size:16px">{{ r.hits }}</td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid var(--gov-line)">
+            <div style="padding:11px 16px;border-bottom:2px solid var(--gov-green);font-family:var(--font-heading);font-weight:600;font-size:17px;color:var(--gov-green-dark)">উচ্চতর নিষ্পত্তির অপেক্ষায়</div>
+            <div style="padding:6px 16px 14px">
+              <table class="table" style="font-family:var(--font-body)">
+                <thead><tr><th style="font-family:var(--font-body)">স্মারক</th><th style="font-family:var(--font-body)">দপ্তর</th><th style="font-family:var(--font-body)">মাত্রা</th></tr></thead>
+                <tbody>
+                  <sc-for list="{{ queue }}" as="q" hint-placeholder-count="4">
+                    <tr class="gov-row" onClick="{{ q.onClick }}" style="cursor:pointer"><td style="font-size:13px">{{ q.ref }}</td><td style="font-size:13px">{{ q.office }}</td>
+                      <td><span class="tag" style="border-radius:0;background:{{ q.bg }};color:{{ q.fg }};font-family:var(--font-body);font-size:12px">{{ q.sev }}</span></td></tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isVerify }}">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+          <div>
+            <div style="font-size:12.5px;color:var(--gov-green-dark);font-weight:600;margin-bottom:4px">{{ rec.kicker }}</div>
+            <h4 style="font-family:var(--font-heading);margin:0;font-size:22px">{{ rec.title }}</h4>
+            <div style="font-size:13.5px;color:#5a645f">{{ rec.subtitle }}</div>
+          </div>
+          <div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap">
+            <span class="tag" style="border-radius:0;border:1px solid var(--gov-red);color:var(--gov-red);font-family:var(--font-body);font-size:12.5px">{{ rec.matchLabel }}</span>
+            <button class="btn" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;font-family:var(--font-body);height:38px" onClick="{{ goDash }}">ড্যাশবোর্ডে ফিরুন</button>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;align-items:start">
+          <div style="background:#fff;border:1px solid var(--gov-line)">
+            <div style="padding:10px 14px;border-bottom:2px solid var(--gov-green);display:flex;justify-content:space-between;align-items:center">
+              <span style="font-family:var(--font-heading);font-weight:600;font-size:16px;color:var(--gov-green-dark)">উৎস রেকর্ড</span>
+              <span class="tag" style="border-radius:0;background:var(--gov-green-100);color:var(--gov-green-dark);font-family:var(--font-body);font-size:12px">{{ rec.leftSystem }}</span>
+            </div>
+            <div style="padding:6px 14px 12px">
+              <sc-for list="{{ rec.left }}" as="f" hint-placeholder-count="7">
+                <div style="display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-bottom:1px dashed var(--gov-line);font-size:14px">
+                  <span style="color:#6b756f">{{ f.k }}</span><span style="font-weight:600;text-align:right">{{ f.v }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background:#fff;border:1px solid var(--gov-line)">
+            <div style="padding:10px 14px;border-bottom:2px solid var(--gov-green);display:flex;justify-content:space-between;align-items:center">
+              <span style="font-family:var(--font-heading);font-weight:600;font-size:16px;color:var(--gov-green-dark)">তুলনাকৃত রেকর্ড</span>
+              <span class="tag" style="border-radius:0;background:var(--gov-green-100);color:var(--gov-green-dark);font-family:var(--font-body);font-size:12px">{{ rec.rightSystem }}</span>
+            </div>
+            <div style="padding:6px 14px 12px">
+              <sc-for list="{{ rec.right }}" as="f" hint-placeholder-count="7">
+                <div style="display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-bottom:1px dashed var(--gov-line);font-size:14px">
+                  <span style="color:#6b756f">{{ f.k }}</span><span style="font-weight:600;text-align:right;color:{{ f.color }}">{{ f.v }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background:#fff;border:1px solid var(--gov-line)">
+            <div style="padding:10px 14px;border-bottom:2px solid var(--gov-green);font-family:var(--font-heading);font-weight:600;font-size:16px;color:var(--gov-green-dark)">নিরীক্ষা কার্যক্রম</div>
+            <div style="padding:14px;display:flex;flex-direction:column;gap:10px">
+              <p style="margin:0;font-size:13.5px;line-height:1.7;color:#5a645f">চিহ্নিত অসংগতির বিপরীতে আনুষ্ঠানিক আপত্তি স্মারক প্রস্তুত করুন, প্রমাণক সংযুক্ত করুন এবং দায়িত্বপ্রাপ্ত দপ্তরে প্রেরণ করুন।</p>
+              <sc-if value="{{ canAudit }}">
+              <button class="btn" style="background:var(--gov-green);color:#fff;border:1px solid var(--gov-green);border-radius:0;font-family:var(--font-body);font-weight:600;height:40px;width:100%" onClick="{{ openMemo }}">আপত্তি উত্থাপন</button>
+              <button class="btn" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;font-family:var(--font-body);height:38px;width:100%" onClick="{{ attachEvidence }}">প্রমাণক সংযুক্ত করুন</button>
+              <button class="btn" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;font-family:var(--font-body);height:38px;width:100%" onClick="{{ scheduleInspection }}">সরেজমিন তদন্তের সময়সূচি</button>
+              </sc-if>
+              <sc-if value="{{ viewOnlyAudit }}"><div style="padding:9px 12px;background:#f4f6f5;border-left:3px solid #aab2ae;color:#4a544f;font-size:13px;line-height:1.6">{{ roleLabel }} ভূমিকায় আপত্তি উত্থাপনের অনুমতি নেই — শুধু দেখা যাবে।</div></sc-if>
+              <div style="border-top:1px solid var(--gov-line);padding-top:10px;font-size:13px">
+                <div style="display:flex;justify-content:space-between;padding:3px 0"><span style="color:#6b756f">সংযুক্ত প্রমাণক</span><span>{{ evidenceCount }}</span></div>
+                <div style="display:flex;justify-content:space-between;padding:3px 0"><span style="color:#6b756f">এই মামলায় আপত্তি</span><span>{{ caseObjections }}</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1px solid var(--gov-line)">
+          <div style="padding:11px 16px;border-bottom:2px solid var(--gov-green);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px">
+            <span style="font-family:var(--font-heading);font-weight:600;font-size:17px;color:var(--gov-green-dark)">অসংগতি ম্যাট্রিক্স</span>
+            <span style="font-size:13px;color:#6b756f">স্বয়ংক্রিয় তুলনা · {{ rec.ruleName }}</span>
+          </div>
+          <div style="padding:6px 16px 14px;overflow-x:auto">
+            <table class="table" style="min-width:680px;font-family:var(--font-body)">
+              <thead><tr>
+                <th style="width:24%;font-family:var(--font-body)">বৈশিষ্ট্য</th>
+                <th style="font-family:var(--font-body)">{{ rec.leftSystem }}</th>
+                <th style="font-family:var(--font-body)">{{ rec.rightSystem }}</th>
+                <th style="font-family:var(--font-body)">পার্থক্য</th>
+                <th style="width:110px;font-family:var(--font-body)">মাত্রা</th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ rec.rows }}" as="r" hint-placeholder-count="5">
+                  <tr>
+                    <td><div style="font-weight:600">{{ r.attr }}</div><div style="font-size:12px;color:#7a847f">{{ r.attrEn }}</div></td>
+                    <td>{{ r.a }}</td>
+                    <td style="color:{{ r.color }};font-weight:{{ r.weight }}">{{ r.b }}</td>
+                    <td style="font-size:13px">{{ r.delta }}</td>
+                    <td><span class="tag" style="border-radius:0;background:{{ r.bg }};color:{{ r.fg }};font-family:var(--font-body);font-size:12px">{{ r.sev }}</span></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isLarms }}">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+          <div>
+            <div style="font-size:12.5px;color:var(--gov-green-dark);font-weight:600;margin-bottom:4px">ভূমি অধিগ্রহণ ও হুকুমদখল নিরীক্ষা (LARMS)</div>
+            <h4 style="font-family:var(--font-heading);margin:0;font-size:22px">এলএ মামলা ০৭/২০২৪–২৫ · কালিয়াকৈর–চন্দ্রা সংযোগ সড়ক</h4>
+            <div style="font-size:13.5px;color:#5a645f">প্রত্যাশী সংস্থা: সড়ক ও জনপথ বিভাগ, গাজীপুর · মৌজা চন্দ্রা, জেএল ৪২</div>
+          </div>
+          <div style="display:flex;gap:9px;flex-wrap:wrap">
+            <button class="btn" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;font-family:var(--font-body);height:38px" onClick="{{ goDash }}">ড্যাশবোর্ডে ফিরুন</button>
+            <sc-if value="{{ canAudit }}"><button class="btn" style="background:var(--gov-green);color:#fff;border:1px solid var(--gov-green);border-radius:0;font-family:var(--font-body);font-weight:600;height:38px" onClick="{{ openMemo }}">আপত্তি উত্থাপন</button></sc-if>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1px solid var(--gov-line);padding:15px 16px">
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:#5a645f;margin-bottom:7px">
+            <span>অধিগ্রহণ প্রক্রিয়ার অগ্রগতি</span><span>{{ lifecyclePctBn }} সম্পন্ন</span>
+          </div>
+          <div style="height:8px;background:#e3e7e4;margin-bottom:10px">
+            <div style="height:8px;background:var(--gov-green);width:{{ lifecyclePct }}"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px">
+            <sc-for list="{{ lifecycle }}" as="l" hint-placeholder-count="5">
+              <div style="font-size:13px;line-height:1.5">
+                <div style="font-weight:600;color:{{ l.color }}">{{ l.label }}</div>
+                <div style="color:#7a847f;font-size:12.5px">{{ l.state }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;background:#fff;border:1px solid var(--gov-line)">
+          <sc-for list="{{ larmsTabs }}" as="t" hint-placeholder-count="5">
+            <button class="btn" onClick="{{ t.onClick }}" style="border:0;border-bottom:3px solid {{ t.underline }};border-radius:0;background:{{ t.bg }};color:{{ t.color }};font-family:var(--font-body);font-weight:600;font-size:14px;padding:11px 16px;flex-direction:column;align-items:flex-start;gap:1px">
+              <span>{{ t.label }}</span>
+              <span style="font-weight:400;font-size:12px;opacity:.75">{{ t.labelEn }}</span>
+            </button>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ larmsIsTracker }}">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+              <sc-for list="{{ compStats }}" as="c" hint-placeholder-count="4">
+                <div style="background:#fff;padding:14px 16px;border:1px solid var(--gov-line);border-top:3px solid var(--gov-green)">
+                  <div style="font-size:13px;color:#5a645f">{{ c.label }}</div>
+                  <div style="font-family:var(--font-heading);font-size:27px;line-height:1.25;color:{{ c.color }}">{{ c.value }}</div>
+                  <div style="font-size:12px;color:#7a847f">{{ c.en }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="background:#fff;border:1px solid var(--gov-line)">
+              <div style="padding:11px 16px;border-bottom:2px solid var(--gov-green);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px">
+                <span style="font-family:var(--font-heading);font-weight:600;font-size:17px;color:var(--gov-green-dark)">ক্ষতিপূরণ প্রদান পরিস্থিতি</span>
+                <span style="font-size:13px;color:#6b756f">রোয়েদাদ বনাম পরিশোধ রেজিস্টার</span>
+              </div>
+              <div style="padding:6px 16px 14px;overflow-x:auto">
+                <table class="table" style="min-width:820px;font-family:var(--font-body)">
+                  <thead><tr>
+                    <th style="font-family:var(--font-body)">ক্ষতিপূরণ দাবিদার</th>
+                    <th style="font-family:var(--font-body)">এনআইডি</th>
+                    <th style="font-family:var(--font-body)">দাগ নং</th>
+                    <th style="font-family:var(--font-body)">পরিমাণ</th>
+                    <th style="font-family:var(--font-body)">রোয়েদাদ</th>
+                    <th style="font-family:var(--font-body)">পরিশোধিত</th>
+                    <th style="font-family:var(--font-body)">অবস্থা</th>
+                    <th style="text-align:right;font-family:var(--font-body)">নিরীক্ষা</th>
+                  </tr></thead>
+                  <tbody>
+                    <sc-for list="{{ claimants }}" as="c" hint-placeholder-count="6">
+                      <tr>
+                        <td style="font-weight:600">{{ c.name }}</td>
+                        <td style="font-size:13px">{{ c.nid }}</td>
+                        <td>{{ c.dag }}</td>
+                        <td>{{ c.area }}</td>
+                        <td>{{ c.award }}</td>
+                        <td style="color:{{ c.paidColor }}">{{ c.paid }}</td>
+                        <td><span class="tag" style="border-radius:0;background:{{ c.bg }};color:{{ c.fg }};font-family:var(--font-body);font-size:12px">{{ c.status }}</span></td>
+                        <td style="text-align:right">
+                          <button class="btn" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;font-family:var(--font-body);font-size:12.5px;padding:4px 10px" onClick="{{ c.onFlag }}" disabled="{{ c.disabled }}">{{ c.actionLabel }}</button>
+                        </td>
+                      </tr>
+                    </sc-for>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ larmsIsPanel }}">
+          <div style="background:#fff;border:1px solid var(--gov-line)">
+            <div style="padding:11px 16px;border-bottom:2px solid var(--gov-green)">
+              <div style="font-family:var(--font-heading);font-weight:600;font-size:17px;color:var(--gov-green-dark)">{{ larmsPanel.title }}</div>
+              <div style="font-size:12.5px;color:#6b756f">{{ larmsPanel.note }}</div>
+            </div>
+            <div style="padding:6px 16px 14px;overflow-x:auto">
+              <table class="table" style="min-width:680px;font-family:var(--font-body)">
+                <thead><tr>
+                  <th style="width:30%;font-family:var(--font-body)">যাচাইয়ের বিষয়</th>
+                  <th style="font-family:var(--font-body)">দাখিলকৃত তথ্য</th>
+                  <th style="font-family:var(--font-body)">নিরীক্ষা পর্যবেক্ষণ</th>
+                  <th style="width:120px;font-family:var(--font-body)">অবস্থা</th>
+                </tr></thead>
+                <tbody>
+                  <sc-for list="{{ larmsPanel.rows }}" as="r" hint-placeholder-count="4">
+                    <tr>
+                      <td style="font-weight:600">{{ r.item }}</td>
+                      <td style="font-size:13.5px">{{ r.value }}</td>
+                      <td style="font-size:13px;color:#5a645f">{{ r.finding }}</td>
+                      <td><span class="tag" style="border-radius:0;background:{{ r.bg }};color:{{ r.fg }};font-family:var(--font-body);font-size:12px">{{ r.status }}</span></td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isDenied }}">
+      <div style="background:#fff;border:1px solid var(--gov-line);border-top:3px solid var(--gov-red);padding:28px 26px;max-width:720px;margin:30px auto;display:flex;flex-direction:column;gap:12px">
+        <div style="font-family:var(--font-heading);font-weight:600;font-size:22px;color:#8e1720">প্রবেশাধিকার নেই</div>
+        <div style="font-size:15px;line-height:1.75">{{ deniedMsg }}</div>
+        <div style="font-size:14px;line-height:1.7;color:#4a544f">আপনার জন্য অনুমোদিত পাতা: <strong>{{ allowedList }}</strong></div>
+        <div><button class="btn" style="background:var(--gov-green);color:#fff;border:1px solid var(--gov-green);border-radius:0;font-family:var(--font-body);font-weight:600" onClick="{{ goRoleHome }}">আমার প্রথম পাতায় যান</button></div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isSettle }}">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+          <div>
+            <div style="font-size:13px;color:var(--gov-green);font-weight:600">আপত্তি দাখিল → দপ্তরের জবাব → DAC সভা → PAC</div>
+            <h4 style="font-family:var(--font-heading);margin:0;font-size:23px;color:var(--gov-green-dark)">অডিট আপত্তি নিষ্পত্তি</h4>
+            <div style="font-size:13.5px;color:#5a645f">প্রতিটি আপত্তির জবাব, সভার সিদ্ধান্ত ও PAC পর্যায় এক জায়গায় · আজকের তারিখ (ডেমো): ২০ সেপ্টেম্বর ২০২৬</div>
+            <div style="font-size:13px;color:var(--gov-green-dark);font-weight:600;margin-top:2px">{{ scopeNote }}</div>
+          </div>
+          <div style="display:flex;gap:9px;flex-wrap:wrap;align-items:flex-end">
+            <sc-if value="{{ canDac }}">
+            <div class="field" style="margin:0"><label style="font-family:var(--font-body);font-size:12.5px">পরবর্তী DAC সভা</label>
+              <input class="input" type="date" style="border-radius:0;font-family:var(--font-body);height:38px" value="{{ dacDate }}" onChange="{{ onDacDate }}"></div>
+            <button class="btn" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;font-family:var(--font-body);height:38px" onClick="{{ scheduleDac }}">সভা নির্ধারণ ও নোটিশ</button>
+            <button class="btn" style="background:var(--gov-green);color:#fff;border:1px solid var(--gov-green);border-radius:0;font-family:var(--font-body);font-weight:600;height:38px" onClick="{{ genMom }}">কার্যবিবরণী (MoM) তৈরি</button>
+            </sc-if>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
+          <sc-for list="{{ stlStats }}" as="k" hint-placeholder-count="5">
+            <div style="background:#fff;padding:13px 15px;border:1px solid var(--gov-line);border-top:3px solid {{ k.color }}">
+              <div style="font-size:13px;color:#5a645f">{{ k.label }}</div>
+              <div style="font-family:var(--font-heading);font-size:28px;line-height:1.2;color:{{ k.color }}">{{ k.value }}</div>
+              <div style="font-size:12px;color:#7a847f">{{ k.note }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ momReady }}">
+          <div style="background:#fff;border:1px solid var(--gov-line);border-left:4px solid var(--gov-green)">
+            <div style="padding:11px 16px;border-bottom:1px solid var(--gov-line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+              <span style="font-family:var(--font-heading);font-weight:600;font-size:17px;color:var(--gov-green-dark)">DAC সভার কার্যবিবরণী (খসড়া) · সভার তারিখ {{ dacDateBn }}</span>
+              <span style="font-size:13px;color:#6b756f">স্বয়ংক্রিয়ভাবে তৈরি · PDF রপ্তানিযোগ্য</span>
+            </div>
+            <div style="padding:6px 16px 14px">
+              <table class="table" style="font-family:var(--font-body)">
+                <thead><tr><th style="font-family:var(--font-body)">স্মারক</th><th style="font-family:var(--font-body)">দপ্তর</th><th style="font-family:var(--font-body)">সভার সিদ্ধান্ত</th></tr></thead>
+                <tbody>
+                  <sc-for list="{{ momRows }}" as="m" hint-placeholder-count="3">
+                    <tr><td style="font-size:13px">{{ m.ref }}</td><td style="font-size:13px">{{ m.office }}</td><td style="font-size:13px;font-weight:600">{{ m.decision }}</td></tr>
+                  </sc-for>
+                </tbody>
+              </table>
+              <div style="font-size:13px;color:#6b756f;margin-top:6px">{{ momNote }}</div>
+            </div>
+          </div>
+        </sc-if>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:18px;align-items:start">
+          <div style="background:#fff;border:1px solid var(--gov-line)">
+            <div style="padding:11px 16px;border-bottom:2px solid var(--gov-green);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+              <span style="font-family:var(--font-heading);font-weight:600;font-size:17px;color:var(--gov-green-dark)">আপত্তি রেজিস্টার</span>
+              <span style="font-size:13px;color:#6b756f">একটি সারিতে ক্লিক করে বিস্তারিত দেখুন</span>
+            </div>
+            <div style="padding:4px 12px 12px;overflow-x:auto">
+              <table class="table" style="font-family:var(--font-body)">
+                <thead><tr>
+                  <th style="font-family:var(--font-body)">স্মারক</th>
+                  <th style="font-family:var(--font-body)">দপ্তর</th>
+                  <th style="font-family:var(--font-body)">সময়সীমা</th>
+                  <th style="font-family:var(--font-body)">ধাপ</th>
+                </tr></thead>
+                <tbody>
+                  <sc-for list="{{ stlRows }}" as="r" hint-placeholder-count="8">
+                    <tr class="gov-row" onClick="{{ r.onClick }}" style="cursor:pointer;background:{{ r.rowBg }}">
+                      <td style="font-size:13px"><div style="font-weight:600">{{ r.ref }}</div><div style="color:#6b756f;font-size:12px">{{ r.type }} · {{ r.service }}</div></td>
+                      <td style="font-size:13px">{{ r.office }}</td>
+                      <td style="font-size:13px;white-space:nowrap"><div>{{ r.dueBn }}</div><div style="font-size:12px;color:{{ r.dueColor }}">{{ r.dueNote }}</div></td>
+                      <td><span class="tag" style="border-radius:0;background:{{ r.bg }};color:{{ r.fg }};font-family:var(--font-body);font-size:12px">{{ r.stageLabel }}</span></td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div style="background:#fff;border:1px solid var(--gov-line)">
+            <div style="padding:12px 16px;border-bottom:2px solid var(--gov-green)">
+              <div style="font-size:12.5px;color:var(--gov-green);font-weight:600">{{ sel.type }} আপত্তি · {{ sel.service }} · {{ sel.loc }}</div>
+              <div style="font-family:var(--font-heading);font-weight:600;font-size:18px;color:var(--gov-green-dark)">{{ sel.ref }}</div>
+              <div style="font-size:14px;line-height:1.6;margin-top:3px">{{ sel.obs }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:#4a544f;margin-top:7px">
+                <span>জড়িত অর্থ: <strong>{{ sel.amount }}</strong></span>
+                <span>দপ্তর: <strong>{{ sel.office }}</strong></span>
+                <span>সময়সীমা: <strong style="color:{{ sel.dueColor }}">{{ sel.dueBn }} ({{ sel.dueNote }})</strong></span>
+              </div>
+            </div>
+
+            <div style="padding:12px 16px;display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--gov-line)">
+              <sc-for list="{{ stepper }}" as="p" hint-placeholder-count="5">
+                <div style="flex:1;min-width:86px;padding:7px 8px;background:{{ p.bg }};color:{{ p.fg }};font-size:12.5px;line-height:1.35;border-bottom:3px solid {{ p.bar }}">
+                  <div style="font-weight:600">{{ p.n }}. {{ p.label }}</div><div style="font-size:11.5px;opacity:.85">{{ p.who }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="padding:14px 16px;display:flex;flex-direction:column;gap:14px">
+              <div style="padding:9px 12px;background:var(--gov-amber-100);color:#5c4005;font-size:13.5px;border-left:3px solid var(--gov-amber)"><strong>এখন কী করতে হবে:</strong> {{ sel.nextStep }}</div>
+              <sc-if value="{{ showRoleNote }}"><div style="padding:9px 12px;background:#f4f6f5;border-left:3px solid #aab2ae;color:#4a544f;font-size:13px;line-height:1.6">{{ roleNote }}</div></sc-if>
+              <sc-if value="{{ hasReply }}">
+                <div style="font-size:13.5px;line-height:1.6;background:#f4f7f5;padding:9px 12px"><strong>দপ্তরের জবাব:</strong> {{ sel.reply }} <span style="color:#6b756f">({{ sel.filesBn }}টি সংযুক্তি)</span></div>
+              </sc-if>
+
+              <sc-if value="{{ canReply }}">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="font-family:var(--font-heading);font-weight:600;color:var(--gov-green-dark)">দপ্তরের জবাব <span style="font-family:var(--font-body);font-weight:400;font-size:12.5px;color:#6b756f">· দায়িত্ব: দপ্তর প্রতিনিধি</span></div>
+                  <textarea class="input" style="border-radius:0;font-family:var(--font-body);min-height:84px" value="{{ replyText }}" onChange="{{ onReplyText }}" placeholder="ব্যাখ্যা লিখুন — কেন অনিয়মটি ঘটেছে, কী সংশোধন করা হয়েছে, কোন নথি সংযুক্ত।"></textarea>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                    <button class="btn" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;font-family:var(--font-body)" onClick="{{ addReplyFile }}">প্রমাণপত্র সংযুক্ত (PDF/স্ক্যান)</button>
+                    <span style="font-size:13px;color:#4a544f">সংযুক্ত: {{ replyFilesBn }}টি</span>
+                    <span style="flex:1"></span>
+                    <button class="btn" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;font-family:var(--font-body)" onClick="{{ saveDraft }}">খসড়া সংরক্ষণ</button>
+                    <button class="btn" style="background:var(--gov-green);color:#fff;border:1px solid var(--gov-green);border-radius:0;font-family:var(--font-body);font-weight:600" onClick="{{ submitReply }}">চূড়ান্ত জবাব দাখিল</button>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ canDecide }}">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="font-family:var(--font-heading);font-weight:600;color:var(--gov-green-dark)">DAC সভার সিদ্ধান্ত <span style="font-family:var(--font-body);font-weight:400;font-size:12.5px;color:#6b756f">· দায়িত্ব: DAC কমিটি</span></div>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <button class="btn" style="background:var(--gov-green);color:#fff;border:1px solid var(--gov-green);border-radius:0;font-family:var(--font-body);font-weight:600" onClick="{{ decideSettled }}">নিষ্পত্তি (Settled)</button>
+                    <button class="btn" style="border:1px solid var(--gov-amber);background:var(--gov-amber-100);color:#5c4005;border-radius:0;font-family:var(--font-body)" onClick="{{ decideReexamine }}">পুনঃনিরীক্ষণ (Re-examine)</button>
+                    <button class="btn" style="border:1px solid var(--gov-red);background:var(--gov-red-100);color:#8e1720;border-radius:0;font-family:var(--font-body)" onClick="{{ decideUnsettled }}">অনিষ্পন্ন (Unsettled)</button>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ canForwardPac }}">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="font-family:var(--font-heading);font-weight:600;color:var(--gov-green-dark)">PAC পর্যায়ে প্রেরণ <span style="font-family:var(--font-body);font-weight:400;font-size:12.5px;color:#6b756f">· দায়িত্ব: অডিট বিভাগ / মন্ত্রণালয়</span></div>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <button class="btn" style="background:var(--gov-green-dark);color:#fff;border:1px solid var(--gov-green-dark);border-radius:0;font-family:var(--font-body);font-weight:600" onClick="{{ forwardPac }}">CAG-এর মাধ্যমে PAC-এ প্রেরণ</button>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ canPacDecide }}">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="font-family:var(--font-heading);font-weight:600;color:var(--gov-green-dark)">PAC সিদ্ধান্ত রেকর্ড <span style="font-family:var(--font-body);font-weight:400;font-size:12.5px;color:#6b756f">· দায়িত্ব: মন্ত্রণালয় প্রতিনিধি</span></div>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <button class="btn" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;font-family:var(--font-body)" onClick="{{ addPacDoc }}">মন্ত্রণালয়ের ব্যাখ্যা/পরিপত্র আপলোড</button>
+                    <button class="btn" style="background:var(--gov-green);color:#fff;border:1px solid var(--gov-green);border-radius:0;font-family:var(--font-body);font-weight:600" onClick="{{ pacSettle }}">PAC: নিষ্পত্তি</button>
+                    <button class="btn" style="border:1px solid var(--gov-red);background:var(--gov-red-100);color:#8e1720;border-radius:0;font-family:var(--font-body)" onClick="{{ pacAction }}">PAC: শৃঙ্খলামূলক ব্যবস্থার নির্দেশ</button>
+                  </div>
+                </div>
+              </sc-if>
+
+              <div>
+                <div style="font-family:var(--font-heading);font-weight:600;color:var(--gov-green-dark);margin-bottom:6px">ইতিহাস (ডিজিটাল ট্রেইল)</div>
+                <sc-for list="{{ sel.history }}" as="h" hint-placeholder-count="3">
+                  <div style="display:flex;gap:10px;font-size:13px;padding:5px 0;border-bottom:1px solid #edf0ee">
+                    <span style="color:#6b756f;white-space:nowrap;min-width:96px">{{ h.when }}</span><span>{{ h.text }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isReports }}">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+          <div>
+            <h4 style="font-family:var(--font-heading);margin:0;font-size:22px;color:var(--gov-green-dark)">নিরীক্ষা প্রতিবেদন ও অডিট ট্রেইল</h4>
+            <div style="font-size:13.5px;color:#5a645f">আপত্তি ব্যবস্থাপনা, রপ্তানি ও অপরিবর্তনীয় লগ</div>
+            <div style="font-size:13px;color:var(--gov-green-dark);font-weight:600;margin-top:2px">{{ scopeNote }}</div>
+          </div>
+          <div style="display:flex;gap:9px;flex-wrap:wrap">
+            <button class="btn" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;font-family:var(--font-body);height:38px" onClick="{{ exportCsv }}">সিএসভি রপ্তানি</button>
+            <button class="btn" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;font-family:var(--font-body);height:38px" onClick="{{ printCert }}">নিরীক্ষা সনদ মুদ্রণ</button>
+            <button class="btn" style="background:var(--gov-green);color:#fff;border:1px solid var(--gov-green);border-radius:0;font-family:var(--font-body);font-weight:600;height:38px" onClick="{{ genReport }}">পিডিএফ প্রতিবেদন তৈরি</button>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1px solid var(--gov-line);padding:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;align-items:end">
+          <div class="field"><label style="font-family:var(--font-body);font-size:13px">শুরুর তারিখ</label><input class="input" type="date" style="border-radius:0;font-family:var(--font-body)" value="{{ dateFrom }}" onChange="{{ onDateFrom }}"></div>
+          <div class="field"><label style="font-family:var(--font-body);font-size:13px">শেষ তারিখ</label><input class="input" type="date" style="border-radius:0;font-family:var(--font-body)" value="{{ dateTo }}" onChange="{{ onDateTo }}"></div>
+          <div class="field"><label style="font-family:var(--font-body);font-size:13px">জেলা / উপজেলা</label>
+            <select class="input" style="border-radius:0;font-family:var(--font-body)" value="{{ fDistrict }}" onChange="{{ onDistrict }}">
+              <option>সকল জেলা</option><option>গাজীপুর — কালিয়াকৈর</option><option>গাজীপুর — শ্রীপুর</option><option>নারায়ণগঞ্জ — রূপগঞ্জ</option>
+            </select></div>
+          <div class="field"><label style="font-family:var(--font-body);font-size:13px">সেবা</label>
+            <select class="input" style="border-radius:0;font-family:var(--font-body)" value="{{ fService }}" onChange="{{ onService }}">
+              <option>সকল সেবা</option><option>ই-নামজারি</option><option>ভূমি উন্নয়ন কর</option><option>ভূমি অধিগ্রহণ (LARMS)</option><option>ইজারা ও বন্দোবস্ত</option>
+            </select></div>
+          <div class="field"><label style="font-family:var(--font-body);font-size:13px">মাত্রা</label>
+            <select class="input" style="border-radius:0;font-family:var(--font-body)" value="{{ fSeverity }}" onChange="{{ onSeverity }}">
+              <option>সকল</option><option>অতি গুরুতর</option><option>গুরুতর</option><option>মাঝারি</option><option>সামান্য</option>
+            </select></div>
+          <div class="field"><label style="font-family:var(--font-body);font-size:13px">আপত্তির ধরন</label>
+            <select class="input" style="border-radius:0;font-family:var(--font-body)" value="{{ fType }}" onChange="{{ onType }}">
+              <option>সকল ধরন</option><option>আর্থিক</option><option>প্রশাসনিক</option><option>প্রক্রিয়াগত</option>
+            </select></div>
+        </div>
+
+        <sc-if value="{{ reportReady }}">
+          <div style="background:var(--gov-green-dark);color:#fff;padding:20px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-end">
+            <div>
+              <div style="font-size:12.5px;opacity:.8;margin-bottom:5px">খসড়া প্রস্তুত · স্মারক নং AR/CEN/{{ reportNo }}</div>
+              <div style="font-family:var(--font-heading);font-size:26px;line-height:1.3">সমন্বিত নিরীক্ষা প্রতিবেদন</div>
+              <div style="font-size:13.5px;opacity:.85">{{ fDistrict }} · {{ fService }} · মাত্রা: {{ fSeverity }}</div>
+            </div>
+            <div style="display:flex;gap:28px">
+              <div><div style="font-family:var(--font-heading);font-size:28px;line-height:1.2">{{ findingCountBn }}</div><div style="font-size:12.5px;opacity:.8">পর্যবেক্ষণ</div></div>
+              <div><div style="font-family:var(--font-heading);font-size:28px;line-height:1.2">{{ mismatchTotal }}</div><div style="font-size:12.5px;opacity:.8">জড়িত অর্থ</div></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <div style="background:#fff;border:1px solid var(--gov-line)">
+          <div style="padding:11px 16px;border-bottom:2px solid var(--gov-green);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px">
+            <span style="font-family:var(--font-heading);font-weight:600;font-size:17px;color:var(--gov-green-dark)">নিরীক্ষা পর্যবেক্ষণ ও আপত্তিসমূহ</span>
+            <span style="font-size:13px;color:#6b756f">নির্বাচিত ফিল্টারে {{ findingCountBn }}টি</span>
+          </div>
+          <div style="padding:6px 16px 14px;overflow-x:auto">
+            <table class="table" style="min-width:760px;font-family:var(--font-body)">
+              <thead><tr>
+                <th style="font-family:var(--font-body)">স্মারক</th>
+                <th style="font-family:var(--font-body)">সেবা</th>
+                <th style="font-family:var(--font-body)">অবস্থান</th>
+                <th style="font-family:var(--font-body)">পর্যবেক্ষণ</th>
+                <th style="font-family:var(--font-body)">জড়িত অর্থ</th>
+                <th style="width:104px;font-family:var(--font-body)">মাত্রা</th>
+                <th style="width:104px;font-family:var(--font-body)">অবস্থা</th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ findings }}" as="f" hint-placeholder-count="6">
+                  <tr>
+                    <td style="font-size:12.5px">{{ f.ref }}</td>
+                    <td style="font-size:13px">{{ f.service }}</td>
+                    <td style="font-size:13px">{{ f.loc }}</td>
+                    <td style="font-size:13.5px">{{ f.obs }}</td>
+                    <td>{{ f.amount }}</td>
+                    <td><span class="tag" style="border-radius:0;background:{{ f.bg }};color:{{ f.fg }};font-family:var(--font-body);font-size:12px">{{ f.sev }}</span></td>
+                    <td><span class="tag" style="border-radius:0;background:{{ f.sbg }};color:{{ f.sfg }};font-family:var(--font-body);font-size:12px">{{ f.status }}</span></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="background:#fff;border:1px solid var(--gov-line)">
+          <div style="padding:11px 16px;border-bottom:2px solid var(--gov-green);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px">
+            <span style="font-family:var(--font-heading);font-weight:600;font-size:17px;color:var(--gov-green-dark)">অপরিবর্তনীয় অডিট ট্রেইল</span>
+            <span style="font-size:13px;color:#6b756f">সেশন · ২০ সেপ্টেম্বর ২০২৬ · কেবল সংযোজনযোগ্য</span>
+          </div>
+          <div style="padding:6px 16px 14px;overflow-x:auto">
+            <table class="table" style="min-width:600px;font-family:var(--font-body)">
+              <thead><tr>
+                <th style="width:72px;font-family:var(--font-body)">সময়</th>
+                <th style="width:130px;font-family:var(--font-body)">ব্যবহারকারী</th>
+                <th style="font-family:var(--font-body)">কার্যক্রম</th>
+                <th style="font-family:var(--font-body)">সূত্র</th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ trail }}" as="t" hint-placeholder-count="4">
+                  <tr>
+                    <td style="font-size:13px">{{ t.time }}</td>
+                    <td style="font-size:13px">{{ t.who }}</td>
+                    <td style="font-size:13.5px">{{ t.act }}</td>
+                    <td style="font-size:12.5px;color:#6b756f">{{ t.ref }}</td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+
+  <div style="background:var(--gov-green-dark);color:#fff;margin-top:18px">
+    <div style="max-width:1220px;margin:0 auto;padding:26px 18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px">
+      <div>
+        <div style="font-family:var(--font-heading);font-weight:600;font-size:17px;margin-bottom:8px">ভূমি মন্ত্রণালয়</div>
+        <div style="font-size:13.5px;line-height:1.8;opacity:.85">ভবন নং ৪, বাংলাদেশ সচিবালয়, ঢাকা–১০০০<br>ই-মেইল: info@minland.gov.bd</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-heading);font-weight:600;font-size:16px;margin-bottom:8px">গুরুত্বপূর্ণ লিংক</div>
+        <sc-for list="{{ footerLinksA }}" as="l" hint-placeholder-count="4">
+          <div style="padding:3px 0"><a class="gov-link" href="#" onClick="{{ noop }}" style="font-size:13.5px;opacity:.88">{{ l.label }}</a></div>
+        </sc-for>
+      </div>
+      <div>
+        <div style="font-family:var(--font-heading);font-weight:600;font-size:16px;margin-bottom:8px">নীতি ও আইন</div>
+        <sc-for list="{{ footerLinksB }}" as="l" hint-placeholder-count="4">
+          <div style="padding:3px 0"><a class="gov-link" href="#" onClick="{{ noop }}" style="font-size:13.5px;opacity:.88">{{ l.label }}</a></div>
+        </sc-for>
+      </div>
+      <div>
+        <div style="font-family:var(--font-heading);font-weight:600;font-size:16px;margin-bottom:8px">সহায়তা</div>
+        <div style="font-size:13.5px;line-height:1.9;opacity:.88">ভূমি সেবা হটলাইন <strong>১৬১২২</strong><br>সরকারি তথ্য ও সেবা <strong>৩৩৩</strong><br>কারিগরি সহায়তা: ০২-৪৭১২০২১</div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.18)">
+      <div style="max-width:1220px;margin:0 auto;padding:11px 18px;font-size:12.5px;opacity:.75">কপিরাইট © ২০২৬ ভূমি মন্ত্রণালয়, গণপ্রজাতন্ত্রী বাংলাদেশ সরকার · ডেমো প্রোটোটাইপ, প্রকৃত তথ্য নয়</div>
+    </div>
+  </div>
+
+  <sc-if value="{{ otpOpen }}">
+    <div class="dialog-backdrop" style="z-index:60">
+      <div class="dialog" style="background:#fff;border-radius:0;border:1px solid var(--gov-line);font-family:var(--font-body)">
+        <div style="font-family:var(--font-heading);font-weight:600;font-size:20px;color:var(--gov-green-dark)">দ্বি-স্তর যাচাইকরণ</div>
+        <div style="font-size:14px;line-height:1.75;color:#3c4642">{{ userId }} আইডির নিবন্ধিত মোবাইলে ছয় অঙ্কের কোড পাঠানো হয়েছে। এসি (ভূমি) অফিসের টার্মিনালে বায়োমেট্রিক যাচাইও ব্যবহার করা যাবে।</div>
+        <div class="field"><label style="font-family:var(--font-body);font-size:13px">ওটিপি কোড</label>
+          <input class="input" style="border-radius:0;letter-spacing:.4em;text-align:center;font-size:17px;font-family:var(--font-body)" value="{{ otp }}" onChange="{{ onOtp }}" placeholder="• • • • • •"></div>
+        <div style="font-size:12.5px;color:var(--gov-green-dark)">ডেমো কোড: ৪৮২৯১৩ — অথবা সরাসরি “যাচাই ও প্রবেশ” চাপুন।</div>
+        <div class="dialog-actions">
+          <button class="btn" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;font-family:var(--font-body)" onClick="{{ closeOtp }}">বাতিল</button>
+          <button class="btn" style="background:var(--gov-green);color:#fff;border:1px solid var(--gov-green);border-radius:0;font-family:var(--font-body);font-weight:600" onClick="{{ doLogin }}">যাচাই ও প্রবেশ</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ memoOpen }}">
+    <div class="dialog-backdrop" style="z-index:60">
+      <div class="dialog" style="background:#fff;border-radius:0;border:1px solid var(--gov-line);width:min(560px,100%);font-family:var(--font-body)">
+        <div style="font-family:var(--font-heading);font-weight:600;font-size:20px;color:var(--gov-green-dark)">নিরীক্ষা আপত্তি স্মারক</div>
+        <div style="font-size:12.5px;color:#6b756f;margin-top:-6px">বিষয়: {{ memoCase }}</div>
+        <div class="field"><label style="font-family:var(--font-body);font-size:13px">পর্যবেক্ষণের বিবরণ</label>
+          <textarea class="input" style="border-radius:0;font-family:var(--font-body);min-height:92px" value="{{ memoText }}" onChange="{{ onMemoText }}" placeholder="অসংগতি, লঙ্ঘিত বিধি এবং জড়িত অর্থের পরিমাণ উল্লেখ করুন।"></textarea></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px">
+          <div class="field"><label style="font-family:var(--font-body);font-size:13px">আপত্তির ধরন</label>
+            <select class="input" style="border-radius:0;font-family:var(--font-body)" value="{{ memoType }}" onChange="{{ onMemoType }}"><option>আর্থিক</option><option>প্রশাসনিক</option><option>প্রক্রিয়াগত</option></select></div>
+          <div class="field"><label style="font-family:var(--font-body);font-size:13px">মাত্রা</label>
+            <select class="input" style="border-radius:0;font-family:var(--font-body)" value="{{ memoSev }}" onChange="{{ onMemoSev }}"><option>অতি গুরুতর</option><option>গুরুতর</option><option>মাঝারি</option><option>সামান্য</option></select></div>
+          <div class="field"><label style="font-family:var(--font-body);font-size:13px">প্রেরণ</label>
+            <select class="input" style="border-radius:0;font-family:var(--font-body)" value="{{ memoTo }}" onChange="{{ onMemoTo }}"><option>এসি (ভূমি), কালিয়াকৈর</option><option>এসি (ভূমি), শ্রীপুর</option><option>জেলা প্রশাসক, গাজীপুর</option><option>ভূমি অধিগ্রহণ কর্মকর্তা, গাজীপুর</option></select></div>
+          <div class="field"><label style="font-family:var(--font-body);font-size:13px">নিষ্পত্তির সময়সীমা</label>
+            <input class="input" type="date" style="border-radius:0;font-family:var(--font-body)" value="{{ memoDue }}" onChange="{{ onMemoDue }}"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:9px;font-size:13px;border:1px dashed var(--gov-line);padding:9px 11px;background:var(--gov-green-100)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gov-green-dark)" stroke-width="1.7"><path d="m21.4 11.1-9.2 9.2a5 5 0 0 1-7-7l9.1-9.2a3.3 3.3 0 1 1 4.7 4.7l-9.2 9.1a1.7 1.7 0 0 1-2.3-2.3l8.5-8.5"></path></svg>
+          <span>এই মামলায় {{ evidenceCount }}টি প্রমাণক সংযুক্ত আছে</span>
+        </div>
+        <div class="dialog-actions">
+          <button class="btn" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;font-family:var(--font-body)" onClick="{{ closeMemo }}">বাতিল</button>
+          <button class="btn" style="background:var(--gov-green);color:#fff;border:1px solid var(--gov-green);border-radius:0;font-family:var(--font-body);font-weight:600" onClick="{{ submitMemo }}">দাখিল ও প্রেরণ</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ confirmOpen }}">
+    <div class="dialog-backdrop" style="z-index:60">
+      <div class="dialog" style="background:#fff;border-radius:0;border:1px solid var(--gov-line);font-family:var(--font-body)">
+        <div style="font-family:var(--font-heading);font-weight:600;font-size:20px;color:var(--gov-green-dark)">অপরিশোধিত দাবি চিহ্নিতকরণ</div>
+        <div style="font-size:14px;line-height:1.75;color:#3c4642">{{ confirmName }} ({{ confirmDag }})-কে এলএ মামলা ০৭/২০২৪–২৫-এর অপরিশোধিত ক্ষতিপূরণ দাবিদার হিসেবে চিহ্নিত করা হবে। ভূমি অধিগ্রহণ কর্মকর্তাকে স্বয়ংক্রিয়ভাবে অবহিত করা হবে।</div>
+        <div class="dialog-actions">
+          <button class="btn" style="border:1px solid var(--gov-line);background:#fff;border-radius:0;font-family:var(--font-body)" onClick="{{ closeConfirm }}">বাতিল</button>
+          <button class="btn" style="background:var(--gov-red);color:#fff;border:1px solid var(--gov-red);border-radius:0;font-family:var(--font-body);font-weight:600" onClick="{{ doFlag }}">চিহ্নিত করুন</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ toastOpen }}">
+    <div style="position:fixed;right:20px;bottom:20px;z-index:70;background:var(--gov-green-dark);color:#fff;padding:13px 17px;max-width:340px;border-left:4px solid var(--gov-red)">
+      <div style="font-family:var(--font-heading);font-weight:600;font-size:15.5px;line-height:1.4">{{ toastTitle }}</div>
+      <div style="font-size:13px;opacity:.85;line-height:1.6">{{ toastBody }}</div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+const CRIT = { bg: '#fbe7e8', fg: '#8e1720' };
+const HIGH = { bg: '#fbf0d8', fg: '#7a5411' };
+const MED  = { bg: '#e6f0ec', fg: '#00432f' };
+const LOW  = { bg: '#eef0ef', fg: '#3c4642' };
+const OK   = { bg: '#e2f0e6', fg: '#1f5133' };
+const SEV = { 'অতি গুরুতর': CRIT, 'গুরুতর': HIGH, 'মাঝারি': MED, 'সামান্য': LOW };
+const sevStyle = s => SEV[s] || LOW;
+const bn = v => String(v).replace(/[0-9]/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+const toNum = v => Number(String(v).replace(/[০-৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d)).replace(/[^0-9]/g, '')) || 0;
+const TODAY = '2026-09-20';
+const MONTHS = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
+const dateBn = iso => { const [y, m, d] = iso.split('-').map(Number); return bn(d) + ' ' + MONTHS[m - 1] + ' ' + bn(y); };
+const addDays = (iso, n) => new Date(Date.parse(iso + 'T00:00:00Z') + n * 864e5).toISOString().slice(0, 10);
+const daysUntil = iso => Math.round((Date.parse(iso + 'T00:00:00Z') - Date.parse(TODAY + 'T00:00:00Z')) / 864e5);
+
+// Settlement lifecycle (proposal §1.4): raised → office reply → DAC decision → PAC
+const STAGES = {
+  raised:     { short: 'জবাবের অপেক্ষায়', st: HIGH, steps: ['done', 'current', 'todo', 'todo', 'todo'], next: 'দপ্তর প্রতিনিধি ব্যাখ্যা ও প্রমাণপত্র সংযুক্ত করে চূড়ান্ত জবাব দাখিল করবেন।' },
+  reexamine:  { short: 'পুনঃনিরীক্ষণ', st: HIGH, steps: ['done', 'current', 'done', 'done', 'todo'], next: 'DAC অতিরিক্ত প্রমাণ চেয়েছে — দপ্তর প্রতিনিধি নতুন প্রমাণসহ আবার জবাব দাখিল করবেন।' },
+  replied:    { short: 'জবাব দাখিলকৃত', st: MED, steps: ['done', 'done', 'current', 'todo', 'todo'], next: 'DAC কমিটি সভায় জবাব পর্যালোচনা করে তিনটির একটি সিদ্ধান্ত দেবে: নিষ্পত্তি, পুনঃনিরীক্ষণ বা অনিষ্পন্ন।' },
+  settled:    { short: 'নিষ্পত্তিকৃত', st: OK, steps: ['done', 'done', 'done', 'done', 'skip'], closed: true, next: 'আর কোনো কাজ নেই — DAC আপত্তিটি নিষ্পত্তি করেছে, তথ্য আর্কাইভে সংরক্ষিত।' },
+  unsettled:  { short: 'অনিষ্পন্ন', st: CRIT, steps: ['done', 'done', 'done', 'done', 'current'], next: 'DAC-এ নিষ্পত্তি হয়নি — অডিট বিভাগ CAG-এর মাধ্যমে আপত্তিটি PAC-এ প্রেরণ করবে।' },
+  pac:        { short: 'PAC-এ বিবেচনাধীন', st: CRIT, steps: ['done', 'done', 'done', 'done', 'current'], next: 'PAC সভায় সচিব/প্রধানের ব্যাখ্যা নেওয়া হবে — মন্ত্রণালয় প্রতিনিধি PAC-এর সিদ্ধান্ত রেকর্ড করবেন।' },
+  pacSettled: { short: 'PAC কর্তৃক নিষ্পত্তি', st: OK, steps: ['done', 'done', 'done', 'done', 'done'], closed: true, next: 'আর কোনো কাজ নেই — PAC আপত্তিটি নিষ্পত্তি করেছে।' },
+  pacAction:  { short: 'শৃঙ্খলামূলক ব্যবস্থা', st: CRIT, steps: ['done', 'done', 'done', 'done', 'done'], closed: true, next: 'PAC শৃঙ্খলামূলক ব্যবস্থার নির্দেশ দিয়েছে — সংশ্লিষ্ট মন্ত্রণালয় ব্যবস্থা গ্রহণ করবে।' }
+};
+const STEP_DEFS = [['আপত্তি উত্থাপন', 'অডিট দল'], ['দপ্তরের জবাব', 'দপ্তর প্রতিনিধি'], ['DAC পর্যালোচনা', 'DAC কমিটি'], ['DAC সিদ্ধান্ত', 'DAC কমিটি'], ['PAC পর্যায়', 'মন্ত্রণালয় / CAG']];
+const STEP_STYLE = {
+  done: { bg: '#e2f0e6', fg: '#1f5133', bar: '#1f5133' },
+  current: { bg: '#fbf0d8', fg: '#5c4005', bar: '#9a6a04' },
+  todo: { bg: '#f4f6f5', fg: '#7a847f', bar: '#d3d8d5' },
+  skip: { bg: '#f4f6f5', fg: '#aab2ae', bar: '#e4e8e6' }
+};
+
+// Role-based access: pages each role may open, actions it may take, and the objections it may see.
+const ALL = () => true;
+const ROLES = {
+  'কেন্দ্রীয় নিরীক্ষা কর্মকর্তা': { name: 'সাইফুল আলম', initials: 'সআ', uid: 'ADT-0142', factor: 1, home: 'dashboard', title: 'কেন্দ্রীয় আন্তঃসংযুক্ত নিরীক্ষা ড্যাশবোর্ড', scope: 'সকল জেলা', juris: 'জাতীয় পর্যায়ের নিরীক্ষা অধিক্ষেত্র',
+    pages: ['dashboard', 'verify', 'larms', 'settle', 'reports'], can: ['audit', 'pacForward'], sees: ALL },
+  'জেলা নিরীক্ষা কর্মকর্তা': { name: 'নাসরিন সুলতানা', initials: 'নসু', uid: 'ADT-0217', factor: 0.16, home: 'dashboard', title: 'জেলা নিরীক্ষা ড্যাশবোর্ড', scope: 'জেলা: গাজীপুর', juris: 'জেলা অধিক্ষেত্র · গাজীপুর',
+    pages: ['dashboard', 'verify', 'larms', 'settle', 'reports'], can: ['audit'], sees: o => o.district.startsWith('গাজীপুর') },
+  'উপজেলা নিরীক্ষা পরিদর্শক': { name: 'মোঃ রাকিবুল হাসান', initials: 'রহা', uid: 'ADT-0385', factor: 0.035, home: 'dashboard', title: 'উপজেলা নিরীক্ষা ড্যাশবোর্ড', scope: 'উপজেলা: কালিয়াকৈর', juris: 'উপজেলা অধিক্ষেত্র · কালিয়াকৈর',
+    pages: ['dashboard', 'verify', 'settle', 'reports'], can: ['audit'], sees: o => o.district === 'গাজীপুর — কালিয়াকৈর' },
+  'দপ্তর প্রতিনিধি (জবাবদাতা)': { name: 'ফারহানা ইয়াসমিন', initials: 'ফই', uid: 'OFC-1103', factor: 1, home: 'settle', scope: 'দপ্তর: এসি (ভূমি), কালিয়াকৈর', juris: 'আপনার দপ্তরের আপত্তির জবাব দাখিল',
+    pages: ['settle'], can: ['reply'], sees: o => o.office === 'এসি (ভূমি), কালিয়াকৈর' },
+  'DAC কমিটি সদস্য': { name: 'মোঃ জাহিদ হোসেন', initials: 'জহো', uid: 'DAC-0021', factor: 1, home: 'settle', juris: 'DAC সভায় আপত্তি পর্যালোচনা ও সিদ্ধান্ত',
+    pages: ['settle', 'reports'], can: ['dac'], sees: ALL },
+  'মন্ত্রণালয় প্রতিনিধি': { name: 'শাহনাজ পারভীন', initials: 'শপা', uid: 'MIN-0056', factor: 1, home: 'settle', juris: 'PAC সমন্বয় ও সিদ্ধান্ত রেকর্ড',
+    pages: ['settle', 'reports'], can: ['pacDecide'], sees: ALL },
+  'কারিগরি প্রশাসক': { name: 'তানভীর আহমেদ', initials: 'তআ', uid: 'SYS-0003', factor: 1, home: 'reports', juris: 'অডিট ট্রেইল ও সিস্টেম পরিবীক্ষণ',
+    pages: ['reports'], can: [], sees: ALL }
+};
+const PAGE_NAMES = { dashboard: 'ড্যাশবোর্ড', verify: 'ক্রস-ভেরিফিকেশন', larms: 'LARMS নিরীক্ষা', settle: 'আপত্তি নিষ্পত্তি', reports: 'প্রতিবেদন ও লগ' };
+// Who acts at each open stage (shown to roles that can only view).
+const STAGE_ACTOR = { raised: ['reply', 'দপ্তর প্রতিনিধি'], reexamine: ['reply', 'দপ্তর প্রতিনিধি'], replied: ['dac', 'DAC কমিটি সদস্য'], unsettled: ['pacForward', 'কেন্দ্রীয় নিরীক্ষা কর্মকর্তা'], pac: ['pacDecide', 'মন্ত্রণালয় প্রতিনিধি'] };
+const roleCfg = r => ({ title: 'আন্তঃসংযুক্ত নিরীক্ষা ড্যাশবোর্ড', scope: 'সকল জেলা', ...(ROLES[r] || ROLES['কেন্দ্রীয় নিরীক্ষা কর্মকর্তা']) });
+
+class Component extends DCLogic {
+  state = {
+    screen: 'home', authed: false,
+    userId: 'ADT-0142', password: 'auditor', role: 'কেন্দ্রীয় নিরীক্ষা কর্মকর্তা',
+    otpOpen: false, otp: '',
+    search: '', subject: 'mutation',
+    memoOpen: false, memoText: '', memoType: 'আর্থিক', memoSev: 'অতি গুরুতর', memoTo: 'এসি (ভূমি), কালিয়াকৈর', memoDue: '2026-10-15',
+    evidence: 2, objections: [],
+    larmsTab: 5, confirm: null, flagged: {},
+    toast: null,
+    dateFrom: '2026-07-01', dateTo: '2026-09-20',
+    fDistrict: 'সকল জেলা', fService: 'সকল সেবা', fSeverity: 'সকল', fType: 'সকল ধরন',
+    reportReady: false,
+    bellOpen: false,
+    stl: {}, stlSel: 'AO/GAZ/2026/0412', replyText: '', replyFiles: 0,
+    dacDate: '2026-09-28', momReady: false,
+    trail: []
+  };
+
+  // Record a settlement action on one objection: patch its state and add to its history + the audit trail.
+  stlUpdate(ref, patch, histText) {
+    this.setState(st => {
+      const cur = st.stl[ref] || {};
+      return { stl: { ...st.stl, [ref]: { ...cur, ...patch, extra: [...(cur.extra || []), { when: 'আজ · ' + dateBn(TODAY), text: histText }] } } };
+    });
+    this.log(histText, ref);
+  }
+
+  log(act, ref) { this.setState(s => ({ trail: [...s.trail, { act, ref, who: s.authed ? roleCfg(s.role).name : '—' }] })); }
+
+  notify(title, body) {
+    this.setState({ toast: { title, body } });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ toast: null }), 3800);
+  }
+
+  componentWillUnmount() { clearTimeout(this._t); }
+  go(screen) { this.setState({ screen }); }
+
+  records() {
+    return {
+      mutation: {
+        kicker: 'আন্তঃসংযুক্ত যাচাই · ই-নামজারি ↔ ভূমি উন্নয়ন কর', district: 'গাজীপুর — কালিয়াকৈর',
+        title: 'নামজারি মামলা MUT-GAZ-2024-0881',
+        subtitle: 'গাজীপুর · কালিয়াকৈর · মৌজা চন্দ্রা (জেএল ৪২) · খতিয়ান ৪১২ · দাগ ১১৮৩',
+        leftSystem: 'ই-নামজারি', rightSystem: 'এলডি ট্যাক্স ও ই-পর্চা',
+        ruleName: 'ভূমি উন্নয়ন কর বনাম ই-নামজারি বিধি',
+        matchCount: 4,
+        left: [
+          { k: 'আবেদন নম্বর', v: '৩৫২১/২০২৪-২৫' },
+          { k: 'আবেদনকারী', v: 'মোঃ শহিদুল ইসলাম' },
+          { k: 'এনআইডি', v: '১৯৯৪ ৭৭১২ ৮৮৩ ০৪১' },
+          { k: 'খতিয়ান (বিএস)', v: '৪১২' },
+          { k: 'দাগ নম্বর', v: '১১৮৩' },
+          { k: 'হস্তান্তরিত পরিমাণ', v: '০.৩৩০০ একর' },
+          { k: 'জমির শ্রেণি', v: 'বাণিজ্যিক' },
+          { k: 'আদেশের তারিখ', v: '১১ ফেব্রুয়ারি ২০২৫' }
+        ],
+        right: [
+          { k: 'হোল্ডিং নম্বর', v: '১১৮৩/সি-০৪' },
+          { k: 'রেকর্ডভুক্ত মালিক', v: 'মোঃ শহিদুল ইসলাম' },
+          { k: 'হোল্ডিংয়ের এনআইডি', v: '১৯৯৪ ৭৭১২ ৮৮৩ ০৪১' },
+          { k: 'খতিয়ান (আরএস)', v: '৩৮৯', color: '#8e1720' },
+          { k: 'দাগ নম্বর', v: '১১৮৩' },
+          { k: 'রেজিস্টারে পরিমাণ', v: '০.২৪৫০ একর', color: '#8e1720' },
+          { k: 'প্রযোজ্য করহার', v: 'কৃষি', color: '#8e1720' },
+          { k: 'সর্বশেষ দাখিলা', v: 'রেকর্ডে নেই', color: '#8e1720' }
+        ],
+        rows: [
+          { attr: 'জমির শ্রেণি', attrEn: 'Land classification', a: 'বাণিজ্যিক', b: 'কৃষি', delta: 'করহার কম নির্ধারিত', sev: 'অতি গুরুতর' },
+          { attr: 'দাগের পরিমাণ', attrEn: 'Plot area', a: '০.৩৩০০ একর', b: '০.২৪৫০ একর', delta: '−০.০৮৫০ একর', sev: 'গুরুতর' },
+          { attr: 'খতিয়ান সংযোগ', attrEn: 'Khatian linkage', a: 'বিএস ৪১২', b: 'আরএস ৩৮৯', delta: 'বিএস↔আরএস সংযোগ নেই', sev: 'গুরুতর' },
+          { attr: 'ধার্যকৃত ভূমি উন্নয়ন কর', attrEn: 'LD tax assessed', a: '৳ ১,৮৪,৫০০', b: '৳ ২,৩১০', delta: '৳ ১,৮২,১৯০ ঘাটতি', sev: 'অতি গুরুতর' },
+          { attr: 'দাখিলা', attrEn: 'Payment slip', a: 'প্রয়োজনীয়', b: 'অনুপস্থিত', delta: '২০২৪-২৫ অপরিশোধিত', sev: 'মাঝারি' },
+          { attr: 'মৌজা ম্যাপ মিল', attrEn: 'Mouza map overlay', a: 'মিলেছে', b: 'মিলেছে', delta: 'পার্থক্য নেই', sev: 'সামান্য' }
+        ]
+      },
+      lease: {
+        kicker: 'আন্তঃসংযুক্ত যাচাই · ইজারা ↔ ভূমি তথ্য ব্যাংক', district: 'গাজীপুর — শ্রীপুর',
+        title: 'খাস ইজারা নথি LS-GAZ-2021-0117',
+        subtitle: 'গাজীপুর · শ্রীপুর · মৌজা বরমী (জেএল ১৭) · খতিয়ান ১/১ (খাস) · দাগ ৬০৪',
+        leftSystem: 'ইজারা ও বন্দোবস্ত', rightSystem: 'ভূমি তথ্য ব্যাংক',
+        ruleName: 'ইজারা বনাম ভূমি তথ্য ব্যাংক বিধি',
+        matchCount: 3,
+        left: [
+          { k: 'ইজারা মামলা', v: 'LS-GAZ-2021-0117' },
+          { k: 'ইজারাগ্রহীতা', v: 'বরমী ট্রেডার্স (স্বত্বাধিকারী আ. মান্নান)' },
+          { k: 'ইজারার মেয়াদ', v: '০১ জুলাই ২০২১ – ৩০ জুন ২০২৪' },
+          { k: 'বার্ষিক ইজারা মূল্য', v: '৳ ৯৬,০০০' },
+          { k: 'ইজারাকৃত পরিমাণ', v: '০.৬২০০ একর' },
+          { k: 'অনুমোদিত ব্যবহার', v: 'মৌসুমি হাট' },
+          { k: 'নবায়ন আবেদন', v: 'পাওয়া যায়নি' }
+        ],
+        right: [
+          { k: 'ভূমি তথ্য ব্যাংক আইডি', v: 'KHAS-GAZ-17-604' },
+          { k: 'বর্তমান দখলদার', v: 'বরমী ট্রেডার্স (সক্রিয়)', color: '#8e1720' },
+          { k: 'ইজারার অবস্থা', v: '২৭ মাস মেয়াদোত্তীর্ণ', color: '#8e1720' },
+          { k: 'আদায়কৃত ইজারা মূল্য', v: '৳ ৯৬,০০০ (২০২১-২২)', color: '#8e1720' },
+          { k: 'দখলকৃত পরিমাণ', v: '০.৯৪০০ একর', color: '#8e1720' },
+          { k: 'রেকর্ডকৃত ব্যবহার', v: 'স্থায়ী স্থাপনা' },
+          { k: 'অবৈধ দখল চিহ্ন', v: '০৪ মার্চ ২০২৬', color: '#8e1720' }
+        ],
+        rows: [
+          { attr: 'ইজারার মেয়াদ', attrEn: 'Lease validity', a: '৩০ জুন ২০২৪ শেষ', b: 'দখল অব্যাহত', delta: '২৭ মাস অননুমোদিত', sev: 'অতি গুরুতর' },
+          { attr: 'দখলকৃত পরিমাণ', attrEn: 'Occupied area', a: '০.৬২০০ একর', b: '০.৯৪০০ একর', delta: '+০.৩২০০ একর অতিরিক্ত', sev: 'অতি গুরুতর' },
+          { attr: 'ইজারা মূল্য', attrEn: 'Lease fees', a: '৳ ২,৮৮,০০০ পাওনা', b: '৳ ৯৬,০০০ আদায়', delta: '৳ ১,৯২,০০০ অনাদায়ি', sev: 'গুরুতর' },
+          { attr: 'ব্যবহারের শর্ত', attrEn: 'Permitted use', a: 'মৌসুমি হাট', b: 'স্থায়ী স্থাপনা', delta: 'শর্ত লঙ্ঘিত', sev: 'গুরুতর' },
+          { attr: 'নবায়ন আদেশ', attrEn: 'Renewal order', a: 'নেই', b: 'নেই', delta: 'অনুমোদন নথিভুক্ত নয়', sev: 'মাঝারি' }
+        ]
+      }
+    };
+  }
+
+  baseClaimants() {
+    return [
+      { id: 'c1', name: 'মোঃ আব্দুল করিম', nid: '১৯৯০ ৪৪৭১ ২২০ ১১৮', dag: '১১৮৩', area: '০.১২৪০ একর', award: '১২,৪০,০০০', paid: '১২,৪০,০০০', status: 'পরিশোধিত' },
+      { id: 'c2', name: 'রহিমা খাতুন', nid: '১৯৮৭ ৩৩১০ ৬৬৪ ৯০২', dag: '১১৮৬', area: '০.০৮৭০ একর', award: '৮,৭০,০০০', paid: '৮,৭০,০০০', status: 'পরিশোধিত' },
+      { id: 'c3', name: 'মোঃ জসিম উদ্দিন', nid: '১৯৯৫ ৮৮২০ ৪৪১ ৩৩৭', dag: '১১৯০', area: '০.২১০০ একর', award: '২১,০০,০০০', paid: '', status: 'অপরিশোধিত' },
+      { id: 'c4', name: 'সুলতানা বেগম', nid: '১৯৮২ ১১৭৪ ৯০৩ ৫৫৬', dag: '১১৯৪', area: '০.১৫৩০ একর', award: '১৫,৩০,০০০', paid: '৪,০০,০০০', status: 'আংশিক পরিশোধিত' },
+      { id: 'c5', name: 'নুরুল আমিন সরকার', nid: '১৯৭৯ ৬৬০২ ১১৮ ৭৭৪', dag: '১২০১', area: '০.৩০৫০ একর', award: '৩০,৫০,০০০', paid: '', status: 'অপরিশোধিত' },
+      { id: 'c6', name: 'মৃত আ. হকের ওয়ারিশগণ', nid: '— (উত্তরাধিকার)', dag: '১২০৫', area: '০.০৯৪০ একর', award: '৯,৪০,০০০', paid: '', status: 'দাবি নিষ্পত্তিহীন' }
+    ];
+  }
+
+  larmsPanels() {
+    return {
+      1: {
+        title: 'প্রত্যাশী সংস্থা ও প্রকল্প প্রস্তাব',
+        note: 'সংস্থার সনদ, প্রকল্প সীমানা ও প্রশাসনিক অনুমোদন যাচাই',
+        rows: [
+          { item: 'প্রত্যাশী সংস্থা', value: 'সড়ক ও জনপথ বিভাগ, গাজীপুর', finding: 'সনদ ৩০ জুন ২০২৭ পর্যন্ত বৈধ', status: 'যাচাইকৃত' },
+          { item: 'প্রশাসনিক অনুমোদন', value: 'স্মারক ৪৪.০০.০০০০.০৪১.২০২৪', finding: 'স্বাক্ষরিত কপি নথিভুক্ত', status: 'যাচাইকৃত' },
+          { item: 'প্রকল্প সীমানা', value: '৪.২ কিমি করিডোর · কালিয়াকৈর–চন্দ্রা', finding: 'ডিপিপি সংযোজনীর সাথে মিল', status: 'যাচাইকৃত' },
+          { item: 'প্রস্তাবিত জমির পরিমাণ', value: '৬.৮৪ একর', finding: 'ডিপিপিতে ৬.১২ একর — ০.৭২ একর অতিরিক্ত', status: 'গুরুতর' }
+        ]
+      },
+      2: {
+        title: 'চ-ফর্ম ও দাগসূচি যাচাই',
+        note: 'দাগসূচি ও চ-ফর্ম দাখিল মৌজা ম্যাপের সাথে মিলকরণ',
+        rows: [
+          { item: 'চ-ফর্ম দাখিল', value: '৩৮টি দাগ তালিকাভুক্ত', finding: '১২ আগস্ট ২০২৪ গৃহীত', status: 'যাচাইকৃত' },
+          { item: 'দাগসূচি বনাম মৌজা ম্যাপ', value: 'মৌজা চন্দ্রা, জেএল ৪২', finding: '৩টি দাগ ম্যাপ শিটে অনুপস্থিত', status: 'গুরুতর' },
+          { item: 'খতিয়ান মালিকানা সংযোগ', value: '৩৮টি এন্ট্রি', finding: '২টি এন্ট্রিতে বিএস খতিয়ান উল্লেখ নেই', status: 'মাঝারি' },
+          { item: 'মোট পরিমাণ', value: '৬.৮৪ একর', finding: 'দাগসূচির যোগফল ৬.৭৯ একর', status: 'মাঝারি' }
+        ]
+      },
+      3: {
+        title: 'সম্ভাব্যতা যাচাই ও যৌথ তদন্ত ফিল্ড বহি',
+        note: 'সম্ভাব্যতা প্রতিবেদন ও যৌথ তদন্ত ফিল্ড বহির এন্ট্রি নিরীক্ষা',
+        rows: [
+          { item: 'সম্ভাব্যতা প্রতিবেদন', value: '০৩ অক্টোবর ২০২৪ দাখিল', finding: 'এসি (ভূমি) ও সংস্থা প্রতিনিধি স্বাক্ষরিত', status: 'যাচাইকৃত' },
+          { item: 'যৌথ তদন্ত ফিল্ড বহি', value: '৩৮টি দাগের এন্ট্রি', finding: '৫টি এন্ট্রিতে মালিকের স্বাক্ষর নেই', status: 'গুরুতর' },
+          { item: 'স্থাপনা ও গাছপালা মূল্যায়ন', value: '৳ ৬২,৪০,০০০', finding: 'গণপূর্ত ও বন বিভাগের রেট সংযুক্ত', status: 'যাচাইকৃত' },
+          { item: 'ফিল্ড বহি বনাম চ-ফর্ম', value: 'মিলকরণ সম্পন্ন', finding: '১১৯০ নম্বর দাগে ০.০৪০০ একর পার্থক্য', status: 'অতি গুরুতর' }
+        ]
+      },
+      4: {
+        title: 'ধারা ৪(১) ও ৭(১) নোটিশ এবং আদেশপত্র',
+        note: 'নোটিশ জারি ও আদেশপত্রের ধারাবাহিকতা যাচাই',
+        rows: [
+          { item: 'ধারা ৪(১) নোটিশ', value: '১৯ নভেম্বর ২০২৪ জারি', finding: 'গেজেট প্রকাশনা নথিভুক্ত', status: 'যাচাইকৃত' },
+          { item: 'আপত্তি দাখিলের সময়', value: '১৫ দিন', finding: '২টি আপত্তি গৃহীত ও নিষ্পত্তিকৃত', status: 'যাচাইকৃত' },
+          { item: 'ধারা ৭(১) নোটিশ', value: '২২ ফেব্রুয়ারি ২০২৫ জারি', finding: '৪ জন মালিককে বিধিবহির্ভূত সময়ে জারি', status: 'গুরুতর' },
+          { item: 'আদেশপত্রের ধারাবাহিকতা', value: 'পৃষ্ঠা ১–৩৪', finding: 'স্ক্যান নথিতে ১৮–১৯ পৃষ্ঠা অনুপস্থিত', status: 'অতি গুরুতর' }
+        ]
+      }
+    };
+  }
+
+  findingsBase() {
+    return [
+      { ref: 'AO/GAZ/2026/0412', service: 'ভূমি উন্নয়ন কর', loc: 'কালিয়াকৈর · চন্দ্রা', obs: 'বাণিজ্যিক হোল্ডিংয়ে কৃষি করহার প্রয়োগ', amount: '৳ ১,৮২,১৯০', sev: 'অতি গুরুতর', district: 'গাজীপুর — কালিয়াকৈর',
+        type: 'আর্থিক', office: 'এসি (ভূমি), কালিয়াকৈর', date: '2026-09-14', due: '2026-09-24', stage: 'raised' },
+      { ref: 'AO/GAZ/2026/0408', service: 'ইজারা ও বন্দোবস্ত', loc: 'শ্রীপুর · বরমী', obs: 'মেয়াদোত্তীর্ণ ইজারা, ২৭ মাস মূল্য অনাদায়ি', amount: '৳ ১,৯২,০০০', sev: 'অতি গুরুতর', district: 'গাজীপুর — শ্রীপুর',
+        type: 'আর্থিক', office: 'জেলা প্রশাসক, গাজীপুর', date: '2026-09-08', due: '2026-09-18', stage: 'replied', files: 3,
+        reply: 'ইজারাগ্রহীতাকে বকেয়া পরিশোধের নোটিশ দেওয়া হয়েছে; অতিরিক্ত দখল উচ্ছেদের আদেশ জারি এবং নবায়ন আবেদন ১৫ সেপ্টেম্বর গৃহীত।' },
+      { ref: 'AO/GAZ/2026/0397', service: 'ভূমি অধিগ্রহণ (LARMS)', loc: 'কালিয়াকৈর · চন্দ্রা', obs: 'আদেশপত্রের ১৮–১৯ পৃষ্ঠা নথিতে নেই', amount: '—', sev: 'গুরুতর', district: 'গাজীপুর — কালিয়াকৈর',
+        type: 'প্রক্রিয়াগত', office: 'ভূমি অধিগ্রহণ কর্মকর্তা, গাজীপুর', date: '2026-08-27', due: '2026-09-10', stage: 'raised' },
+      { ref: 'AO/GAZ/2026/0389', service: 'ই-নামজারি', loc: 'কালিয়াকৈর · মৌচাক', obs: 'আরএস খতিয়ান ২১১-এর বিপরীতে দ্বৈত নামজারি আদেশ', amount: '৳ ৬,৪০,০০০', sev: 'গুরুতর', district: 'গাজীপুর — কালিয়াকৈর',
+        type: 'প্রশাসনিক', office: 'এসি (ভূমি), কালিয়াকৈর', date: '2026-08-19', due: '2026-09-05', stage: 'replied', files: 2,
+        reply: 'দ্বিতীয় নামজারি আদেশ বাতিলের প্রস্তাব জেলা প্রশাসকের নিকট প্রেরণ করা হয়েছে; সংশ্লিষ্ট কানুনগোকে কারণ দর্শানো হয়েছে।' },
+      { ref: 'AO/NGJ/2026/0361', service: 'ই-নামজারি', loc: 'রূপগঞ্জ · কায়েতপাড়া', obs: 'সিএস/এসএ যাচাই ছাড়াই নামজারি মঞ্জুর', amount: '৳ ৩,১০,০০০', sev: 'মাঝারি', district: 'নারায়ণগঞ্জ — রূপগঞ্জ',
+        type: 'প্রক্রিয়াগত', office: 'এসি (ভূমি), রূপগঞ্জ', date: '2026-08-04', due: '2026-08-25', stage: 'unsettled', files: 1,
+        reply: 'সিএস/এসএ খতিয়ান পরবর্তীতে যাচাই করা হয়েছে; নামজারি বহাল রাখার সুপারিশ।' },
+      { ref: 'AO/GAZ/2026/0344', service: 'ভূমি উন্নয়ন কর', loc: 'শ্রীপুর · গোসিঙ্গা', obs: 'হোল্ডিং বিভাজনের পর রেজিস্টার হালনাগাদ হয়নি', amount: '৳ ৪৮,৫০০', sev: 'মাঝারি', district: 'গাজীপুর — শ্রীপুর',
+        type: 'প্রশাসনিক', office: 'এসি (ভূমি), শ্রীপুর', date: '2026-07-22', due: '2026-08-10', stage: 'settled', files: 2,
+        reply: 'রেজিস্টার হালনাগাদ করে বকেয়া কর আদায় করা হয়েছে; দাখিলার কপি সংযুক্ত।' },
+      { ref: 'AO/NGJ/2026/0330', service: 'ভূমি অধিগ্রহণ (LARMS)', loc: 'রূপগঞ্জ · গোলাকান্দাইল', obs: 'রেকর্ডবহির্ভূত ব্যক্তিকে ক্ষতিপূরণ পরিশোধ', amount: '৳ ১১,২০,০০০', sev: 'অতি গুরুতর', district: 'নারায়ণগঞ্জ — রূপগঞ্জ',
+        type: 'আর্থিক', office: 'জেলা প্রশাসক, নারায়ণগঞ্জ', date: '2026-07-15', due: '2026-08-05', stage: 'pac', files: 1,
+        reply: 'অতিরিক্ত পরিশোধিত অর্থ ফেরত আদায়ের প্রক্রিয়া চলমান।' },
+      { ref: 'AO/GAZ/2026/0318', service: 'ইজারা ও বন্দোবস্ত', loc: 'কালিয়াকৈর · ফুলবাড়িয়া', obs: 'খাস দাগের সীমানা ব্যক্তিমালিকানাধীন খতিয়ানে অনুপ্রবিষ্ট', amount: '—', sev: 'সামান্য', district: 'গাজীপুর — কালিয়াকৈর',
+        type: 'প্রশাসনিক', office: 'এসি (ভূমি), কালিয়াকৈর', date: '2026-07-08', due: '2026-10-02', stage: 'raised' }
+    ];
+  }
+
+  // Starting history implied by each sample objection's stage.
+  baseHistory(o) {
+    const h = [{ when: dateBn(o.date), text: 'আপত্তি উত্থাপিত ও ' + o.office + ' বরাবর প্রেরিত' }];
+    if (o.stage === 'raised') return h;
+    h.push({ when: dateBn(addDays(o.date, 6)), text: 'দপ্তরের চূড়ান্ত জবাব দাখিল' });
+    if (o.stage === 'settled') h.push({ when: dateBn(addDays(o.date, 18)), text: 'DAC সভার সিদ্ধান্ত: নিষ্পত্তি' });
+    if (o.stage === 'unsettled' || o.stage === 'pac') h.push({ when: dateBn(addDays(o.date, 18)), text: 'DAC সভার সিদ্ধান্ত: অনিষ্পন্ন' });
+    if (o.stage === 'pac') h.push({ when: dateBn(addDays(o.date, 25)), text: 'CAG-এর মাধ্যমে PAC-এ প্রেরিত' });
+    return h;
+  }
+
+  renderVals() {
+    const s = this.state;
+    const recs = this.records();
+    const rec0 = recs[s.subject] || recs.mutation;
+    const flaggedCount = Object.keys(s.flagged).length;
+    const isPublic = !s.authed;
+    // Logged-out visitors see national figures; the role only applies after login.
+    const cfg = roleCfg(s.authed ? s.role : 'কেন্দ্রীয় নিরীক্ষা কর্মকর্তা');
+    const can = a => cfg.can.includes(a);
+    const scaleN = v => bn(Math.round(toNum(v) * cfg.factor).toLocaleString('en-IN'));
+
+    const svcDefs = [
+      ['০১', 'ই-নামজারি', 'e-Mutation', 14, '৪,২১০', 'mutation'],
+      ['০২', 'ভূমি উন্নয়ন কর', 'Land Development Tax', 31, '৬,৮৮০', 'mutation'],
+      ['০৩', 'ভূমি রেকর্ড ও ম্যাপ (ই-পর্চা)', 'Land Record & Map', 9, '৩,১০৫', 'mutation'],
+      ['০৪', 'ভূমি অধিগ্রহণ ও হুকুমদখল', 'LARMS', 22, '৯১৮', 'larms'],
+      ['০৫', 'ইজারা ও বন্দোবস্ত', 'Lease & Settlement', 17, '১,৪৪২', 'lease'],
+      ['০৬', 'ভূমি প্রশাসন ব্যবস্থাপনা', 'Land Administration', 5, '২,০০৬', 'mutation'],
+      ['০৭', 'ভূমি রাজস্ব মামলা', 'Land Revenue Case', 11, '৭৭৪', 'mutation'],
+      ['০৮', 'ভূমি তথ্য ব্যাংক', 'Land Data Bank', 3, '৫,৫৩০', 'lease'],
+      ['০৯', 'কারিগরি ও অভিযোগ প্রতিকার', 'Grievance Redress', 6, '১,১৯০', 'reports']
+    ];
+
+    const openTarget = (target, label) => () => {
+      const dest = target === 'larms' ? 'larms' : target === 'reports' ? 'reports' : 'verify';
+      if (!s.authed) {
+        this.setState({ screen: 'login' });
+        this.notify('প্রবেশ প্রয়োজন', label + ' নিরীক্ষা সারিতে প্রবেশের জন্য লগইন করুন');
+        return;
+      }
+      if (dest === 'verify') this.setState({ screen: 'verify', subject: target });
+      else this.go(dest);
+      this.log('নিরীক্ষা সারি খোলা হয়েছে', label);
+    };
+
+    // Whether this role may open a service queue / rule target (page access + record jurisdiction).
+    const reachable = target => target === 'larms' || target === 'reports'
+      ? cfg.pages.includes(target)
+      : cfg.pages.includes('verify') && cfg.sees({ district: recs[target].district, office: '' });
+
+    const services = svcDefs.map(([no, bnName, en, flags, audited, target]) => {
+      const hot = flags >= 15;
+      const ok = reachable(target);
+      return {
+        no, bn: bnName, en, audited: scaleN(audited),
+        flagLabel: bn(Math.max(1, Math.round(flags * cfg.factor))) + 'টি চিহ্নিত',
+        bg: hot ? CRIT.bg : MED.bg, fg: hot ? CRIT.fg : MED.fg,
+        op: ok ? '1' : '.5',
+        action: !ok ? 'প্রবেশাধিকার নেই' : target === 'larms' ? 'LARMS নিরীক্ষা' : target === 'reports' ? 'প্রতিবেদন' : 'ক্রস-ভেরিফাই',
+        onClick: openTarget(target, bnName)
+      };
+    });
+
+    const openVerify = (subject, label) => () => {
+      this.setState({ screen: 'verify', subject });
+      this.log('ক্রস-ভেরিফিকেশন বিধি চালানো হয়েছে', label);
+    };
+
+    const openSettle = ref => {
+      const cur = s.stl[ref] || {};
+      this.setState({ screen: 'settle', stlSel: ref, bellOpen: false, replyText: cur.draft || '', replyFiles: cur.draftFiles || 0 });
+    };
+
+    const rules = [
+      { name: 'ভূমি উন্নয়ন কর বনাম ই-নামজারি', scope: 'নামজারিবিহীন হোল্ডিং, করহার', hits: scaleN('১৩২৬'), op: reachable('mutation') ? '1' : '.5', onClick: openVerify('mutation', 'ভূমি উন্নয়ন কর বনাম ই-নামজারি') },
+      { name: 'LARMS বনাম যৌথ তদন্ত ফিল্ড বহি', scope: 'ধারা ৪(১)/৭(১) নোটিশ, ক্ষতিপূরণ', hits: scaleN('২৮৪'), op: reachable('larms') ? '1' : '.5', onClick: () => { this.go('larms'); this.log('ক্রস-ভেরিফিকেশন বিধি চালানো হয়েছে', 'LARMS বনাম যৌথ তদন্ত ফিল্ড বহি'); } },
+      { name: 'ইজারা বনাম ভূমি তথ্য ব্যাংক', scope: 'খাস ইজারা, অবৈধ দখল', hits: scaleN('৪১৭'), op: reachable('lease') ? '1' : '.5', onClick: openVerify('lease', 'ইজারা বনাম ভূমি তথ্য ব্যাংক') }
+    ];
+
+    const queue = [
+      ['AO/GAZ/2026/0412', 'এসি (ভূমি), কালিয়াকৈর', 'অতি গুরুতর'],
+      ['AO/GAZ/2026/0408', 'জেলা প্রশাসক, গাজীপুর', 'অতি গুরুতর'],
+      ['AO/GAZ/2026/0397', 'ভূমি অধিগ্রহণ কর্মকর্তা, গাজীপুর', 'গুরুতর'],
+      ['AO/NGJ/2026/0361', 'এসি (ভূমি), রূপগঞ্জ', 'মাঝারি']
+    ].map(([ref, office, sev]) => ({ ref, office, sev, bg: sevStyle(sev).bg, fg: sevStyle(sev).fg, onClick: () => openSettle(ref) }));
+
+    const kpis = [
+      { label: 'মোট নিরীক্ষিত মামলা', value: scaleN(12480), note: 'এই প্রান্তিকে +' + scaleN(318), color: 'var(--gov-green-dark)' },
+      { label: 'চিহ্নিত অসংগতি', value: bn((Math.round(1326 * cfg.factor) + s.objections.length + flaggedCount).toLocaleString('en-IN')), note: s.objections.length + flaggedCount > 0 ? 'এই সেশনসহ' : '৬টি সিস্টেম জুড়ে', color: '#8e1720' },
+      { label: 'আনুমানিক রাজস্ব ঘাটতি', value: '৳ ' + bn((48.7 * cfg.factor).toFixed(1)) + ' কোটি', note: 'অনাদায়ি', color: 'var(--gov-green-dark)' },
+      { label: 'নিষ্পত্তিকৃত আপত্তি', value: scaleN(842), note: bn(64) + '% সময়সীমার মধ্যে', color: 'var(--gov-green-dark)' },
+      { label: 'অপেক্ষমাণ সরেজমিন তদন্ত', value: scaleN(97), note: scaleN(12) + 'টি মেয়াদোত্তীর্ণ', color: '#7a5411' }
+    ];
+
+    const rec = {
+      ...rec0,
+      matchLabel: bn(rec0.matchCount) + 'টি অসংগতি',
+      rows: rec0.rows.map(r => ({ ...r, ...sevStyle(r.sev), color: r.sev === 'সামান্য' ? 'inherit' : sevStyle(r.sev).fg, weight: r.sev === 'সামান্য' ? '400' : '600' })),
+      right: rec0.right.map(f => ({ ...f, color: f.color || 'inherit' }))
+    };
+
+    const lifeSteps = ['প্রস্তাব', 'দাগসূচি', 'যৌথ তদন্ত', 'নোটিশ ৪(১)/৭(১)', 'ক্ষতিপূরণ'];
+    const lifecycle = lifeSteps.map((label, i) => ({
+      label,
+      state: i < 3 ? 'নিরীক্ষিত' : i === 3 ? 'নিরীক্ষাধীন' : 'আংশিক পরিশোধিত',
+      color: i <= 3 ? 'var(--gov-green-dark)' : '#8e1720'
+    }));
+
+    const tabDefs = [
+      [1, 'প্রস্তাব ও প্রকল্প', 'Proposal & project'],
+      [2, 'চ-ফর্ম ও দাগসূচি', 'Tofsil & schedule'],
+      [3, 'যৌথ তদন্ত', 'Feasibility & survey'],
+      [4, 'নোটিশ ও আদেশ', 'Notices & orders'],
+      [5, 'ক্ষতিপূরণ ট্র্যাকার', 'Compensation tracker']
+    ];
+    const larmsTabs = tabDefs.map(([id, label, labelEn]) => ({
+      label, labelEn,
+      underline: s.larmsTab === id ? 'var(--gov-green)' : 'transparent',
+      bg: s.larmsTab === id ? 'var(--gov-green-100)' : 'transparent',
+      color: s.larmsTab === id ? 'var(--gov-green-dark)' : '#5a645f',
+      onClick: () => this.setState({ larmsTab: id })
+    }));
+
+    const panels = this.larmsPanels();
+    const panel0 = panels[s.larmsTab] || panels[1];
+    const larmsPanel = { ...panel0, rows: panel0.rows.map(r => ({ ...r, ...(r.status === 'যাচাইকৃত' ? OK : sevStyle(r.status)) })) };
+
+    const claimants = this.baseClaimants().map(c => {
+      const isFlagged = !!s.flagged[c.id];
+      const status = isFlagged ? 'নিরীক্ষায় চিহ্নিত' : c.status;
+      const st = status === 'পরিশোধিত' ? OK : status === 'নিরীক্ষায় চিহ্নিত' ? CRIT : status === 'আংশিক পরিশোধিত' ? HIGH : MED;
+      return {
+        ...c,
+        award: '৳ ' + c.award,
+        paid: c.paid ? '৳ ' + c.paid : '—',
+        paidColor: c.paid ? 'inherit' : '#8e1720',
+        status, bg: st.bg, fg: st.fg,
+        disabled: c.status === 'পরিশোধিত' || isFlagged || !roleCfg(s.role).can.includes('audit'),
+        actionLabel: c.status === 'পরিশোধিত' ? 'নিষ্পন্ন' : isFlagged ? 'চিহ্নিত' : 'চিহ্নিত করুন',
+        onFlag: () => this.setState({ confirm: c })
+      };
+    });
+
+    const unpaid = this.baseClaimants().filter(c => c.status !== 'পরিশোধিত').length;
+    const compStats = [
+      { label: 'অধিগ্রহণকৃত জমি', value: bn('6.84') + ' একর', en: 'কত পরিমাণ অধিগ্রহণ', color: 'var(--gov-green-dark)' },
+      { label: 'মোট রোয়েদাদ', value: '৳ ' + bn('9.73') + ' কোটি', en: 'প্রাক্কলন ও রোয়েদাদ', color: 'var(--gov-green-dark)' },
+      { label: 'ক্ষতিপূরণপ্রাপ্ত ব্যক্তি', value: bn(2) + ' / ' + bn(6), en: 'পরিশোধ সম্পন্ন', color: 'var(--gov-green-dark)' },
+      { label: 'বাকি দাবিদার', value: bn(unpaid), en: 'কতজন বাকি আছে', color: '#8e1720' }
+    ];
+
+    // Every objection (this session's + sample data) with its current settlement stage applied.
+    const allObj = [...s.objections, ...this.findingsBase()].map(o => {
+      const ov = s.stl[o.ref] || {};
+      const m = { ...o, ...ov };
+      const stg = STAGES[m.stage];
+      const days = daysUntil(m.due);
+      const awaitingReply = m.stage === 'raised' || m.stage === 'reexamine';
+      return {
+        ...m, stg, days, awaitingReply,
+        status: stg.short,
+        overdue: awaitingReply && days < 0,
+        dueBn: dateBn(m.due),
+        dueNote: stg.closed ? 'সম্পন্ন' : days < 0 ? bn(-days) + ' দিন অতিক্রান্ত' : days === 0 ? 'আজ শেষ দিন' : bn(days) + ' দিন বাকি',
+        dueColor: stg.closed ? '#6b756f' : days < 0 ? '#8e1720' : days <= 7 ? '#7a5411' : '#4a544f',
+        history: [...this.baseHistory(o), ...(ov.extra || [])]
+      };
+    });
+
+    const visObj = allObj.filter(cfg.sees);
+
+    const findingsAll = visObj.filter(f =>
+      (s.fSeverity === 'সকল' || f.sev === s.fSeverity) &&
+      (s.fDistrict === 'সকল জেলা' || f.district === s.fDistrict) &&
+      (s.fService === 'সকল সেবা' || f.service === s.fService) &&
+      (s.fType === 'সকল ধরন' || f.type === s.fType) &&
+      (!s.dateFrom || f.date >= s.dateFrom) && (!s.dateTo || f.date <= s.dateTo)
+    );
+    const findings = findingsAll.map(f => ({ ...f, ...sevStyle(f.sev), sbg: f.stg.st.bg, sfg: f.stg.st.fg }));
+    const findingsAmount = findings.reduce((sum, f) => sum + toNum(f.amount), 0);
+
+    const selObj = visObj.find(o => o.ref === s.stlSel) || visObj[0];
+    const sel = { ...selObj, nextStep: selObj.stg.next, filesBn: bn(selObj.files || 0) };
+    const stepper = STEP_DEFS.map(([label, who], i) => {
+      const k = selObj.stg.steps[i];
+      return { n: bn(i + 1), label, who: k === 'skip' ? 'প্রযোজ্য নয়' : who, ...STEP_STYLE[k] };
+    });
+    const stlRows = visObj.map(o => ({
+      ...o, ...o.stg.st, stageLabel: o.stg.short,
+      rowBg: o.ref === selObj.ref ? 'var(--gov-green-100)' : 'transparent',
+      onClick: () => openSettle(o.ref)
+    }));
+    const countBy = f => bn(visObj.filter(f).length);
+    const stlStats = [
+      { label: 'মোট আপত্তি', value: bn(visObj.length), note: 'উত্থাপিত (Raised)', color: 'var(--gov-green-dark)' },
+      { label: 'জবাবপ্রাপ্ত', value: countBy(o => !o.awaitingReply), note: 'দপ্তর জবাব দিয়েছে (Responded)', color: 'var(--gov-green-dark)' },
+      { label: 'নিষ্পত্তিকৃত', value: countBy(o => o.stage === 'settled' || o.stage === 'pacSettled'), note: 'DAC বা PAC-এ (Settled)', color: '#1f5133' },
+      { label: 'অনিষ্পন্ন / PAC', value: countBy(o => ['unsettled', 'pac', 'pacAction'].includes(o.stage)), note: 'Unsettled', color: '#8e1720' },
+      { label: 'সময়সীমা অতিক্রান্ত', value: countBy(o => o.overdue), note: 'জবাব দেওয়া হয়নি', color: '#7a5411' }
+    ];
+
+    const bellItems = [
+      ...visObj.filter(o => o.overdue).map(o => ({ kind: 'সময়সীমা পার', ...CRIT, text: o.ref + ' · ' + o.office + ' এখনও জবাব দেয়নি (' + bn(-o.days) + ' দিন অতিক্রান্ত)', onClick: () => openSettle(o.ref) })),
+      ...visObj.filter(o => o.awaitingReply && o.days >= 0 && o.days <= 7).map(o => ({ kind: 'রিমাইন্ডার', ...HIGH, text: o.ref + ' · জবাব দেওয়ার ' + bn(o.days) + ' দিন বাকি', onClick: () => openSettle(o.ref) })),
+      ...visObj.filter(o => o.stage === 'replied').map(o => ({ kind: 'জবাবপ্রাপ্ত', ...MED, text: o.ref + ' · DAC সভায় পর্যালোচনার অপেক্ষায়', onClick: () => openSettle(o.ref) })),
+      { kind: 'DAC সভা', ...OK, text: 'পরবর্তী DAC সভা ' + dateBn(s.dacDate) + ' · বিবেচ্য আপত্তির তালিকা প্রস্তুত', onClick: () => this.setState({ screen: 'settle', bellOpen: false }) }
+    ];
+
+    const decide = (stage, label, msg) => () => {
+      this.stlUpdate(selObj.ref, { stage, dac: label }, 'DAC সভার সিদ্ধান্ত: ' + label);
+      this.notify('DAC সিদ্ধান্ত রেকর্ড হয়েছে', selObj.ref + ' · ' + msg);
+    };
+    const momRows = visObj.filter(o => o.dac).map(o => ({ ref: o.ref, office: o.office, decision: o.dac }));
+
+    const trail = s.trail.map((t, i) => {
+      const mins = 545 + i * 3;
+      const hh = String(Math.floor(mins / 60)).padStart(2, '0');
+      const mm = String(mins % 60).padStart(2, '0');
+      return { ...t, time: bn(hh + ':' + mm) };
+    });
+
+    const submitMemo = () => {
+      if (!roleCfg(s.role).can.includes('audit')) return;
+      const n = 413 + s.objections.length;
+      const isLarms = s.screen === 'larms';
+      const obj = {
+        ref: 'AO/GAZ/2026/0' + n,
+        service: isLarms ? 'ভূমি অধিগ্রহণ (LARMS)' : s.subject === 'lease' ? 'ইজারা ও বন্দোবস্ত' : 'ভূমি উন্নয়ন কর',
+        loc: isLarms ? 'কালিয়াকৈর · চন্দ্রা' : s.subject === 'lease' ? 'শ্রীপুর · বরমী' : 'কালিয়াকৈর · চন্দ্রা',
+        obs: s.memoText.trim() || (isLarms ? 'এলএ মামলা ০৭/২০২৪–২৫-এ ক্ষতিপূরণ পরিশোধে অনিয়ম' : rec0.rows[0].attr + ' সংক্রান্ত অসংগতি'),
+        amount: isLarms ? '৳ ৫১,৫০,০০০' : s.subject === 'lease' ? '৳ ১,৯২,০০০' : '৳ ১,৮২,১৯০',
+        sev: s.memoSev,
+        district: 'গাজীপুর — ' + (!isLarms && s.subject === 'lease' ? 'শ্রীপুর' : 'কালিয়াকৈর'),
+        type: s.memoType, office: s.memoTo, due: s.memoDue, date: TODAY, stage: 'raised'
+      };
+      this.setState(st => ({ objections: [obj, ...st.objections], memoOpen: false, memoText: '' }));
+      this.log('নিরীক্ষা আপত্তি দাখিল', obj.ref + ' → ' + s.memoTo);
+      this.notify('আপত্তি ' + obj.ref + ' দাখিল হয়েছে', s.memoSev + ' · প্রেরিত: ' + s.memoTo + ' · "আপত্তি নিষ্পত্তি" পাতায় দেখুন');
+    };
+
+    const runSearch = () => {
+      const q = s.search.trim();
+      const isLease = /604|৬০৪|বরমী|ইজারা|lease/i.test(q);
+      const subject = isLease ? 'lease' : 'mutation';
+      if (isPublic) {
+        this.setState({ screen: 'login' });
+        this.notify('প্রবেশ প্রয়োজন', 'অনুসন্ধান ফলাফল দেখতে নিরীক্ষক হিসেবে লগইন করুন');
+        return;
+      }
+      this.setState({ screen: 'verify', subject });
+      this.log('সার্বিক অনুসন্ধান সম্পন্ন', q ? 'অনুসন্ধান: ' + q : 'অনুসন্ধান: খতিয়ান ৪১২ / দাগ ১১৮৩');
+    };
+
+    const navDefs = isPublic
+      ? [['home', 'হোম'], ['home', 'সেবাসমূহ'], ['home', 'নোটিশ'], ['login', 'নিরীক্ষা কার্যক্রম'], ['home', 'আইন ও বিধি'], ['home', 'যোগাযোগ']]
+      : [...cfg.pages.map(pg => [pg, PAGE_NAMES[pg]]), ['home', 'পোর্টাল হোম']];
+    const pageOk = cfg.pages.includes(s.screen);
+    const recOk = s.screen !== 'verify' || cfg.sees({ district: rec0.district, office: '' });
+    const view = isPublic ? (s.screen === 'home' ? 'home' : 'login')
+      : s.screen === 'home' || s.screen === 'login' ? 'home'
+      : pageOk && recOk ? s.screen : 'denied';
+    const deniedMsg = !pageOk
+      ? '“' + s.role + '” ভূমিকায় “' + (PAGE_NAMES[s.screen] || '') + '” পাতা ব্যবহারের অনুমতি নেই।'
+      : '“' + rec0.title + '” রেকর্ডটি আপনার অধিক্ষেত্রের (' + cfg.scope + ') বাইরে, তাই দেখা যাবে না।';
+
+    const navLinks = navDefs.map(([target, label], i) => ({
+      label,
+      current: (target === s.screen && (isPublic ? i === 0 || (target === 'login' && s.screen === 'login') : true)) ? 'page' : undefined,
+      onClick: e => { e.preventDefault(); this.setState({ screen: target, bellOpen: false }); }
+    }));
+
+    return {
+      isPublic, loggedIn: !isPublic,
+      isHome: view === 'home', isLogin: view === 'login',
+      isDash: view === 'dashboard', isVerify: view === 'verify',
+      isLarms: view === 'larms', isReports: view === 'reports', isSettle: view === 'settle',
+      isDenied: view === 'denied', deniedMsg,
+      userName: cfg.name, userInitials: cfg.initials,
+      showSearch: isPublic || cfg.pages.includes('verify'),
+      showBell: cfg.pages.includes('settle'),
+      allowedList: cfg.pages.map(pg => PAGE_NAMES[pg]).join(', '),
+      goRoleHome: () => this.go(cfg.home),
+      scopeNote: 'আপনার অধিক্ষেত্র: ' + (cfg.sees === ALL ? 'সকল জেলা ও দপ্তর' : cfg.scope) + ' — শুধু এই অধিক্ষেত্রের আপত্তি দেখানো হচ্ছে',
+      canAudit: can('audit'), viewOnlyAudit: !can('audit'), canDac: can('dac'),
+      dashTitle: roleCfg(s.role).title, dashScope: roleCfg(s.role).scope,
+      langNote: e => { e.preventDefault(); this.notify('ইংরেজি সংস্করণ এই ডেমোতে নেই', 'চূড়ান্ত সিস্টেমে বাংলা / English দুই ভাষাই থাকবে।'); },
+      bellOpen: s.bellOpen, bellItems, bellCount: bn(bellItems.length),
+      toggleBell: () => this.setState({ bellOpen: !s.bellOpen }),
+      navLinks,
+      roleLabel: s.role,
+      noop: e => e.preventDefault(),
+
+      search: s.search,
+      onSearch: e => this.setState({ search: e.target.value }),
+      onSearchKey: e => { if (e.key === 'Enter') runSearch(); },
+      goSearchDemo: () => { if (s.authed) { runSearch(); return; } this.setState({ screen: 'login' }); this.notify('প্রবেশ প্রয়োজন', 'খতিয়ান ও দাগ অনুসন্ধানের জন্য নিরীক্ষক লগইন প্রয়োজন'); },
+
+      tickerText: 'ভূমি উন্নয়ন কর ও ই-নামজারি রেকর্ডের আন্তঃসংযুক্ত যাচাই কার্যক্রম সকল জেলায় সম্প্রসারিত করা হয়েছে।',
+      tickerDate: '১৮ সেপ্টেম্বর ২০২৬',
+      homeStats: [
+        { value: bn(9), label: 'সংযুক্ত সেবা' },
+        { value: bn(64), label: 'জেলা' },
+        { value: bn('12,480'), label: 'নিরীক্ষিত মামলা' },
+        { value: bn(4), label: 'নিরীক্ষা স্তর' }
+      ],
+      notices: [
+        { kind: 'নোটিশ', tagBg: '#d21e2b', text: 'অর্থবছর ২০২৪–২৫ এর ভূমি উন্নয়ন কর নিরীক্ষা প্রতিবেদন দাখিলের সময়সীমা ৩০ অক্টোবর ২০২৬।', date: '১৮/০৯/২০২৬' },
+        { kind: 'পরিপত্র', tagBg: '#006a4e', text: 'খাস জমির ইজারা নবায়ন ও বকেয়া আদায় সংক্রান্ত পরিপত্র জারি।', date: '১১/০৯/২০২৬' },
+        { kind: 'নোটিশ', tagBg: '#d21e2b', text: 'এলএআরএমএস ক্ষতিপূরণ পরিশোধ রেজিস্টার হালনাগাদ না করা দপ্তরসমূহের তালিকা প্রকাশ।', date: '০৪/০৯/২০২৬' },
+        { kind: 'বিজ্ঞপ্তি', tagBg: '#7a5411', text: 'উপজেলা নিরীক্ষা পরিদর্শকগণের জন্য আন্তঃসংযুক্ত যাচাই প্রশিক্ষণ কর্মশালা।', date: '২৮/০৮/২০২৬' },
+        { kind: 'পরিপত্র', tagBg: '#006a4e', text: 'ম্যানুয়াল ওভাররাইড লগিং বাধ্যতামূলককরণ সংক্রান্ত নির্দেশনা।', date: '১৯/০৮/২০২৬' }
+      ],
+      authorities: [
+        { role: 'কেন্দ্রীয় নিরীক্ষা কর্মকর্তা (মন্ত্রণালয়/অধিদপ্তর)', scope: 'জাতীয় তদারকি, নীতি প্রয়োগ, আন্তঃজেলা নিরীক্ষা ও আপত্তির চূড়ান্ত নিষ্পত্তি' },
+        { role: 'জেলা নিরীক্ষা কর্মকর্তা (ডিসি/এডিসি রাজস্ব)', scope: 'জেলাভিত্তিক পরিদর্শন, এলএআরএমএস ক্ষতিপূরণ যাচাই, সরেজমিন সময়সূচি' },
+        { role: 'উপজেলা নিরীক্ষা পরিদর্শক (এসি ভূমি)', scope: 'মাঠপর্যায়ে রেকর্ড যাচাই, ই-নামজারি ও এলডি ট্যাক্স অসংগতি, প্রাথমিক আপত্তি' },
+        { role: 'কারিগরি প্রশাসক', scope: 'ব্যবহারকারী ব্যবস্থাপনা, অডিট ট্রেইল, এপিআই সংযোগ ও নিরাপত্তা পরিবীক্ষণ' }
+      ],
+      loginNotes: [
+        { text: 'প্রবেশের জন্য দ্বি-স্তর যাচাই (ওটিপি অথবা বায়োমেট্রিক) বাধ্যতামূলক।' },
+        { text: 'আপনার পদবি অনুযায়ী অধিক্ষেত্র ও তথ্য প্রবেশাধিকার নির্ধারিত হবে।' },
+        { text: 'প্রতিটি অনুসন্ধান, রেকর্ড দর্শন ও আপত্তি অপরিবর্তনীয় লগে সংরক্ষিত হয়।' },
+        { text: 'সহায়তার জন্য কারিগরি হেল্পডেস্ক: ০২-৪৭১২০২১ (সকাল ৯টা – বিকাল ৫টা)।' }
+      ],
+      footerLinksA: [
+        { label: 'ভূমি তথ্য বাতায়ন' }, { label: 'ভূমি উন্নয়ন কর' }, { label: 'ই-নামজারি' }, { label: 'ভূমি রেকর্ড ও জরিপ অধিদপ্তর' }
+      ],
+      footerLinksB: [
+        { label: 'রাষ্ট্রীয় অধিগ্রহণ ও প্রজাস্বত্ব আইন, ১৯৫০' }, { label: 'স্থাবর সম্পত্তি অধিগ্রহণ ও হুকুমদখল আইন, ২০১৭' }, { label: 'সিটিজেন চার্টার' }, { label: 'তথ্য অধিকার আইন, ২০০৯' }
+      ],
+
+      userId: s.userId, password: s.password, role: s.role,
+      onUserId: e => this.setState({ userId: e.target.value }),
+      onPassword: e => this.setState({ password: e.target.value }),
+      onRole: e => this.setState({ role: e.target.value, userId: roleCfg(e.target.value).uid }),
+      startOtp: () => this.setState({ otpOpen: true }),
+      otpOpen: s.otpOpen, otp: s.otp,
+      onOtp: e => this.setState({ otp: e.target.value }),
+      closeOtp: () => this.setState({ otpOpen: false }),
+      doLogin: () => {
+        const me = roleCfg(s.role);
+        this.setState({ otpOpen: false, screen: me.home, authed: true, otp: '' });
+        this.log('সেশন প্রমাণীকৃত — পদবি যাচাই সম্পন্ন', 'ভূমিকাভিত্তিক প্রবেশাধিকার (RBAC) · ' + s.role);
+        this.notify('প্রবেশ সফল · ' + me.name, s.role + ' · ' + me.juris);
+      },
+      logout: () => { this.log('প্রস্থান', s.userId); this.setState({ screen: 'home', bellOpen: false, authed: false }); this.notify('প্রস্থান সম্পন্ন', 'সেশন বন্ধ করা হয়েছে, অডিট ট্রেইল সংরক্ষিত'); },
+      goLogin: () => this.go(s.authed ? cfg.home : 'login'),
+      goDash: () => this.go('dashboard'),
+      goReports: () => this.go('reports'),
+      goVerifyMut: openVerify('mutation', 'ভূমি উন্নয়ন কর বনাম ই-নামজারি'),
+
+      kpis, services, rules, rec,
+      queue: queue.filter(q => visObj.some(o => o.ref === q.ref)),
+      evidenceCount: bn(s.evidence),
+      caseObjections: bn(s.objections.length),
+      attachEvidence: () => {
+        this.setState(st => ({ evidence: st.evidence + 1 }));
+        this.log('ডিজিটাল প্রমাণক সংযুক্ত', rec0.title);
+        this.notify('প্রমাণক সংযুক্ত হয়েছে', 'মৌজা ম্যাপের অনুলিপি যুক্ত করা হয়েছে');
+      },
+      scheduleInspection: () => {
+        this.log('সরেজমিন তদন্তের সময়সূচি নির্ধারিত', rec0.subtitle);
+        this.notify('তদন্তের সময়সূচি নির্ধারিত', 'উপজেলা নিরীক্ষা পরিদর্শক (মোঃ রাকিবুল হাসান, কালিয়াকৈর)-কে দায়িত্ব দেওয়া হয়েছে');
+      },
+
+      lifecycle, lifecyclePct: '78%', lifecyclePctBn: bn(78) + '%',
+      larmsTabs, larmsIsTracker: s.larmsTab === 5, larmsIsPanel: s.larmsTab !== 5,
+      larmsPanel, claimants, compStats,
+      confirmOpen: !!s.confirm,
+      confirmName: s.confirm ? s.confirm.name : '',
+      confirmDag: s.confirm ? 'দাগ ' + s.confirm.dag : '',
+      closeConfirm: () => this.setState({ confirm: null }),
+      doFlag: () => {
+        const c = s.confirm;
+        this.setState(st => ({ flagged: { ...st.flagged, [c.id]: true }, confirm: null }));
+        this.log('অপরিশোধিত ক্ষতিপূরণ দাবি চিহ্নিত', c.name + ' · দাগ ' + c.dag + ' · ৳ ' + c.award);
+        this.notify('দাবি চিহ্নিত হয়েছে', c.name + ' এলএ মামলা ০৭/২০২৪–২৫-এ অপরিশোধিত হিসেবে লিপিবদ্ধ');
+      },
+
+      memoOpen: s.memoOpen, memoText: s.memoText, memoType: s.memoType, memoSev: s.memoSev,
+      onMemoType: e => this.setState({ memoType: e.target.value }), memoTo: s.memoTo, memoDue: s.memoDue,
+      memoCase: s.screen === 'larms' ? 'এলএ মামলা ০৭/২০২৪–২৫ · কালিয়াকৈর–চন্দ্রা সংযোগ সড়ক' : rec0.title,
+      openMemo: () => this.setState({ memoOpen: true }),
+      closeMemo: () => this.setState({ memoOpen: false }),
+      onMemoText: e => this.setState({ memoText: e.target.value }),
+      onMemoSev: e => this.setState({ memoSev: e.target.value }),
+      onMemoTo: e => this.setState({ memoTo: e.target.value }),
+      onMemoDue: e => this.setState({ memoDue: e.target.value }),
+      submitMemo,
+
+      dateFrom: s.dateFrom, dateTo: s.dateTo, fDistrict: s.fDistrict, fService: s.fService, fSeverity: s.fSeverity, fType: s.fType,
+      onType: e => { this.setState({ fType: e.target.value }); this.log('প্রতিবেদনের ফিল্টার পরিবর্তন', 'ধরন: ' + e.target.value); },
+      onDateFrom: e => this.setState({ dateFrom: e.target.value }),
+      onDateTo: e => this.setState({ dateTo: e.target.value }),
+      onDistrict: e => { this.setState({ fDistrict: e.target.value }); this.log('প্রতিবেদনের ফিল্টার পরিবর্তন', 'জেলা: ' + e.target.value); },
+      onService: e => { this.setState({ fService: e.target.value }); this.log('প্রতিবেদনের ফিল্টার পরিবর্তন', 'সেবা: ' + e.target.value); },
+      onSeverity: e => { this.setState({ fSeverity: e.target.value }); this.log('প্রতিবেদনের ফিল্টার পরিবর্তন', 'মাত্রা: ' + e.target.value); },
+      findings, findingCountBn: bn(findings.length),
+      mismatchTotal: '৳ ' + bn(findingsAmount.toLocaleString('en-IN')),
+      reportReady: s.reportReady, reportNo: bn('2026/0' + (77 + s.objections.length)),
+      genReport: () => {
+        this.setState({ reportReady: true });
+        this.log('পিডিএফ নিরীক্ষা প্রতিবেদন তৈরি', bn(findings.length) + 'টি পর্যবেক্ষণ · ' + s.fDistrict);
+        this.notify('প্রতিবেদন তৈরি হয়েছে', bn(findings.length) + 'টি পর্যবেক্ষণ সংকলিত · ' + s.fDistrict);
+      },
+      exportCsv: () => { this.log('সিএসভি রপ্তানি', bn(findings.length) + 'টি সারি'); this.notify('রপ্তানি প্রস্তুত', bn(findings.length) + 'টি পর্যবেক্ষণের সিএসভি ফাইল'); },
+      printCert: () => { this.log('নিরীক্ষা সনদ মুদ্রণ', s.fDistrict); this.notify('মুদ্রণে প্রেরিত', 'যাচাইকৃত নিরীক্ষা সনদ · ' + s.fDistrict); },
+
+      trail,
+
+      stlRows, stlStats, sel, stepper,
+      canReply: selObj.awaitingReply && can('reply'),
+      canDecide: selObj.stage === 'replied' && can('dac'),
+      canForwardPac: selObj.stage === 'unsettled' && can('pacForward'),
+      canPacDecide: selObj.stage === 'pac' && can('pacDecide'),
+      hasReply: !!selObj.reply && !selObj.awaitingReply,
+      showRoleNote: !!STAGE_ACTOR[selObj.stage] && !can(STAGE_ACTOR[selObj.stage][0]),
+      roleNote: STAGE_ACTOR[selObj.stage] ? 'এই ধাপের কাজ করবেন: ' + STAGE_ACTOR[selObj.stage][1] + '। “' + s.role + '” ভূমিকায় শুধু দেখা যাবে।' : '',
+      replyText: s.replyText, replyFilesBn: bn(s.replyFiles),
+      onReplyText: e => this.setState({ replyText: e.target.value }),
+      addReplyFile: () => { this.setState(st => ({ replyFiles: st.replyFiles + 1 })); this.notify('প্রমাণপত্র সংযুক্ত হয়েছে', 'ডেমো: প্রকৃত ফাইল নির্বাচন করা হয় না'); },
+      saveDraft: () => {
+        this.setState(st => ({ stl: { ...st.stl, [selObj.ref]: { ...(st.stl[selObj.ref] || {}), draft: st.replyText, draftFiles: st.replyFiles } } }));
+        this.notify('খসড়া সংরক্ষিত', selObj.ref + ' · এখনও দাখিল হয়নি, পরে সম্পাদনা করা যাবে');
+      },
+      submitReply: () => {
+        if (!s.replyText.trim()) { this.notify('জবাব লিখুন', 'দাখিলের আগে ব্যাখ্যা লিখতে হবে'); return; }
+        this.stlUpdate(selObj.ref, { stage: 'replied', reply: s.replyText.trim(), files: (selObj.files || 0) + s.replyFiles, draft: '', draftFiles: 0 }, 'দপ্তরের চূড়ান্ত জবাব দাখিল (' + bn(s.replyFiles) + 'টি নতুন সংযুক্তি)');
+        this.setState({ replyText: '', replyFiles: 0 });
+        this.notify('জবাব দাখিল হয়েছে · Reply Submitted', selObj.ref + ' · DAC কমিটিকে জানানো হয়েছে');
+      },
+      decideSettled: decide('settled', 'নিষ্পত্তি (Settled)', 'আপত্তি নিষ্পত্তি হয়েছে'),
+      decideReexamine: decide('reexamine', 'পুনঃনিরীক্ষণ (Re-examine)', 'দপ্তরের কাছে অতিরিক্ত প্রমাণ চাওয়া হয়েছে'),
+      decideUnsettled: decide('unsettled', 'অনিষ্পন্ন (Unsettled)', 'আপত্তি রয়ে গেছে, PAC-এ প্রেরণযোগ্য'),
+      forwardPac: () => { this.stlUpdate(selObj.ref, { stage: 'pac' }, 'CAG-এর মাধ্যমে PAC-এ প্রেরিত'); this.notify('PAC-এ প্রেরিত', selObj.ref + ' · মন্ত্রণালয়কে অবহিত করা হয়েছে'); },
+      addPacDoc: () => { this.stlUpdate(selObj.ref, {}, 'মন্ত্রণালয়ের ব্যাখ্যা/পরিপত্র আপলোড'); this.notify('নথি আপলোড হয়েছে', selObj.ref + ' · PAC নথিতে যুক্ত'); },
+      pacSettle: () => { this.stlUpdate(selObj.ref, { stage: 'pacSettled' }, 'PAC সিদ্ধান্ত: নিষ্পত্তি'); this.notify('PAC সিদ্ধান্ত রেকর্ড হয়েছে', selObj.ref + ' · নিষ্পত্তি'); },
+      pacAction: () => { this.stlUpdate(selObj.ref, { stage: 'pacAction' }, 'PAC সিদ্ধান্ত: শৃঙ্খলামূলক ব্যবস্থার নির্দেশ'); this.notify('PAC সিদ্ধান্ত রেকর্ড হয়েছে', selObj.ref + ' · শৃঙ্খলামূলক ব্যবস্থা'); },
+      dacDate: s.dacDate, dacDateBn: dateBn(s.dacDate),
+      onDacDate: e => this.setState({ dacDate: e.target.value }),
+      scheduleDac: () => { this.log('DAC সভা নির্ধারিত', dateBn(s.dacDate)); this.notify('DAC সভা নির্ধারিত · ' + dateBn(s.dacDate), 'অডিট অফিস ও সংশ্লিষ্ট দপ্তরে নোটিশ পাঠানো হয়েছে (ডেমো: প্রকৃত ই-মেইল/SMS যায় না)'); },
+      momReady: s.momReady, momRows,
+      momNote: momRows.length ? 'এই সেশনে DAC-এ নেওয়া ' + bn(momRows.length) + 'টি সিদ্ধান্ত অন্তর্ভুক্ত।' : 'এই সেশনে এখনও কোনো DAC সিদ্ধান্ত রেকর্ড হয়নি — আগে একটি আপত্তিতে সিদ্ধান্ত দিন, তারপর আবার তৈরি করুন।',
+      genMom: () => { this.setState({ momReady: true }); this.log('DAC কার্যবিবরণী তৈরি', bn(momRows.length) + 'টি সিদ্ধান্ত'); this.notify('কার্যবিবরণী তৈরি হয়েছে', bn(momRows.length) + 'টি সিদ্ধান্ত অন্তর্ভুক্ত'); },
+
+      toastOpen: !!s.toast,
+      toastTitle: s.toast ? s.toast.title : '',
+      toastBody: s.toast ? s.toast.body : ''
+    };
+  }
+}
+</script>
+</body>
+</html>
